@@ -120,15 +120,22 @@
     NSString *sidMax = [defaults stringForKey:@"maxSid"];
     
     // 发送网络请求 请求成功回调回来
-    [GHTTPTool getStatusesFromNetwork:[sidMax intValue] success:(void (^)(NSArray *newData))nil failure:(void (^)(NSError *error))nil];
+    [GHTTPTool getStatusesFromNetwork:[sidMax intValue] success:^(NSArray *newData) {
+        // 请求成功回调回来 返回最新的数据
+        self.array = newData;
+    } failure:^(NSError *error) {
+        
+        // 网络请求失败, 返回数据库中存储的最前面的60条数据
+        GStatusesSid *param = [[GStatusesSid alloc]init];
+        param.sid_max   = [sidMax intValue];
+        param.sid_since = [sidMax intValue];
+        param.sid_end   = param.sid_since - 124;
+        
+        NSArray *sa = [GStatusCacheTool statuesWithParam:param];
+        self.array  = [GStatus objectArrayWithKeyValuesArray:sa];
+    }];
     
-    GStatusesSid *param = [[GStatusesSid alloc]init];
-    param.sid_max   = [sidMax intValue];
-    param.sid_since = [sidMax intValue];
-    param.sid_end   = param.sid_since - 124;
     
-    NSArray *sa = [GStatusCacheTool statuesWithParam:param];
-    self.array  = [GStatus objectArrayWithKeyValuesArray:sa];
     
 }
 

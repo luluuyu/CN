@@ -27,19 +27,27 @@
 //    
 //    return <#expression#>;
 //}
-+ (void)getStatusesFromNetwork:(int)sid
++ (void)getStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure
 {
-    [[[GHTTPTool alloc]init] getStatusesFromNetwork:sid];
+    [[[GHTTPTool alloc]init] getStatusesFromNetwork:sid success:^(NSArray *newData) {
+        if (success) {
+            success(newData);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(failure);
+        }
+    }];
 }
 
-- (void)getStatusesFromNetwork:(int)sid{
+- (void)getStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure {
     
     
     NSURL *url = [NSURL URLWithString:[self test3]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     NSDictionary *headerFields = @{
-                                   @"Host":        @"www.cnbeta.com",
-                                   @"Referer":     @"http://www.cnbeta.com",
+                                   @"Host"      :  @"www.cnbeta.com",
+                                   @"Referer"   :  @"http://www.cnbeta.com",
                                    @"User-Agent":  @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10",
                                    @"Connection":  @"keep-alive",
                                    
@@ -126,13 +134,15 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:maxSid forKey:@"maxSid"];
             
-            
+            // 网络请求访问成功返回数据
+            success (self.statusArray);
         }else {
-            NSLog(@"%@",connectionError);
+            failure (failure);
             
         }
         
     }];
+    
     
     
 }

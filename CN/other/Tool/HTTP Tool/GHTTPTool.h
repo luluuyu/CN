@@ -9,7 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface GHTTPTool : NSObject
-
-+ (void)getStatusesFromNetwork:(int)sid;
+/**
+ *  发送一个网络请求
+ *
+ *  @param sid        目前存储的最大 sid
+ *  @param success    网路请求成功后的回调
+ *  @param failure    网络请求失败后的回调
+ */
++ (void)getStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure;
 
 @end

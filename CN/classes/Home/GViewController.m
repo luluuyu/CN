@@ -55,7 +55,7 @@
     
     [self setupScrollPic];
 
-    [self loadData];
+    [self loadNewData];
 }
 
 - (void)setupScrollPic
@@ -88,17 +88,39 @@
     // 自动进入刷新状态
     [header beginRefreshing];
     self.header = header;
-
+    
+    // 2.上拉刷新(上拉加载更多数据)
+    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
+    footer.scrollView = self.tableView;
+    footer.delegate = self;
+    self.footer = footer;
 }
 
-- (void)loadData
+/**
+ *  刷新控件进入开始刷新状态的时候调用
+ */
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
 {
-    //取出最大sid
+    if ([refreshView isKindOfClass:[MJRefreshFooterView class]]) { // 上拉刷新
+        [self loadOldData];
+    } else { // 下拉刷新
+        [self loadNewData];
+    }
+}
+
+- (void)loadOldData
+{
+    
+}
+
+- (void)loadNewData
+{
+    // 取出最大sid
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *sidMax = [defaults stringForKey:@"maxSid"];
     
-    // 先发送网络请求
-    [GHTTPTool getStatusesFromNetwork:[sidMax intValue]];
+    // 发送网络请求 请求成功回调回来
+    [GHTTPTool getStatusesFromNetwork:[sidMax intValue] success:(void (^)(NSArray *newData))nil failure:(void (^)(NSError *error))nil];
     
     GStatusesSid *param = [[GStatusesSid alloc]init];
     param.sid_max   = [sidMax intValue];

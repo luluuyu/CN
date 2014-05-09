@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GViewController : UITableViewController
+@interface GViewController : UIViewController
 
 @end

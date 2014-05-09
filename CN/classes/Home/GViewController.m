@@ -11,6 +11,7 @@
 
 @interface GViewController ()<UITableViewDelegate,UITableViewDataSource>
 
+
 @end
 
 @implementation GViewController
@@ -18,17 +19,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.tableView.delegate = self;
+    
+	UITableView *tableView = [[UITableView alloc]init];
+    tableView.frame = self.view.bounds;
+    tableView.delegate = self;
+    
+    [self.view addSubview:tableView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 60;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GTableViewCell *cell = [GTableViewCell cellWithTableView:tableView];
+    cell.contLable.text  =@"234";
+    cell.titleLable.text = @"12";
     return cell;
 }
 

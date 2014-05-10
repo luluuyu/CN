@@ -10,6 +10,7 @@
 #import "FMDB.h"
 #import "GStatus.h"
 #import "GStatusesSid.h"
+#import "GHTTPTool.h"
 @implementation GStatusCacheTool
 
 static FMDatabaseQueue *_queue;
@@ -66,6 +67,7 @@ static FMDatabaseQueue *_queue;
  */
 + (NSArray *)statuesWithParam:(GStatusesSid *)param
 {
+    
     // 1.定义数组
     __block NSMutableArray *dictArray = nil;
     

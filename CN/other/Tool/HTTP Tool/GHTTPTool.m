@@ -27,9 +27,12 @@
 //    
 //    return <#expression#>;
 //}
++ (void)getStatusesFromNetwork:(int)sid
+{
+    [[[GHTTPTool alloc]init] getStatusesFromNetwork:sid];
+}
 
-- (NSArray *)test23{
-    
+- (void)getStatusesFromNetwork:(int)sid{
     
     
     NSURL *url = [NSURL URLWithString:[self test3]];
@@ -41,7 +44,7 @@
                                    @"Connection":  @"keep-alive",
                                    
                                    };
-
+    
     [request setAllHTTPHeaderFields:headerFields];
     
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
@@ -60,7 +63,7 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc]init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (!connectionError) {
-            //            NSArray *a = [NSArray arrayWithContentsOfURL:[NSURL URLWithString:[self test3]]];
+
             
             NSString *strReturn = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             strReturn = [self replaceUnicode:strReturn];
@@ -90,19 +93,38 @@
                 [dict setValue:[self parse:@"score" arr:arr[i]]    forKey:@"score"];
                 [dict setValue:[self parse:@"ratings_story" arr:arr[i]]    forKey:@"ratings_story"];
                 [dict setValue:[self parse:@"dig" arr:arr[i]]    forKey:@"dig"];
-                [dict setValue:[self parseTime:arr[i]] forKey:@"time"];
+                [dict setObject:[self parseTime:arr[i]] forKey:@"time"];
                 
                 
                 [ma addObject:dict];
-                NSLog(@"%@",ma);
-                [GStatusCacheTool addStatus:dict];
+                
+                
+                //取出最大sid
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                NSString *sidMax = [defaults stringForKey:@"maxSid"];
+                unsigned long sidMaxInt = [sidMax intValue];
+                
+                //当前数据的sid
+                unsigned long currentSid = [dict[@"sid"] intValue];
+                
+                //如果网络数据的 sid 大于 本地数据库存储的最大 sid
+                if (currentSid > sid) {
+                    [GStatusCacheTool addStatus:dict];
+                }
+                
                 
             };
             
             NSArray *statusArray = [GStatus objectArrayWithKeyValuesArray:ma];
             
             self.statusArray = statusArray;
+            NSString *maxSid = [[NSString alloc]init];
+            GStatus *status = statusArray[0];
+            maxSid = status.sid;
             
+            //写入本次获取到的最大sid
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:maxSid forKey:@"maxSid"];
             
             
         }else {
@@ -112,7 +134,7 @@
         
     }];
     
-    return self.statusArray;
+    
 }
 
 

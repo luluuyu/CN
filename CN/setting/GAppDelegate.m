@@ -7,12 +7,21 @@
 //
 
 #import "GAppDelegate.h"
-
+#import "GViewController.h"
 @implementation GAppDelegate
+
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	// Override point for customization after application launch.
+    
+	GViewController *GV = [[GViewController alloc] init];
+	self.navigationController		= [[UINavigationController alloc] initWithRootViewController:GV];
+	self.window.rootViewController	= self.navigationController;
+	[self.window makeKeyAndVisible];
+	
     return YES;
 }
 							

@@ -22,3 +22,21 @@
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_6_1
 #endif
+#import <Availability.h>
+#import "UIImage+UIImage_G.h"
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+
+#define iOS7 ([[UIDevice currentDevice].systemVersion doubleValue] >= 7.0)
+// 2.获得RGB颜色
+#define IWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+
+#endif
+#ifdef DEBUG
+#define IWLog(...) NSLog(__VA_ARGS__)
+#else
+#define IWLog(...)
+#endif

@@ -10,6 +10,6 @@
 
 @interface GHTTPTool : NSObject
 
-+ (NSArray *)getStatusesFrom:(int)sid;
++ (void)getStatusesFromNetwork:(int)sid;
 
 @end

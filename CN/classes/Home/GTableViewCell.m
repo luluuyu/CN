@@ -34,7 +34,7 @@
     
     if (cell == nil) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"GTableViewCell" owner:nil options:nil][0];
-        cell.backgroundColor = [UIColor redColor];
+        
     }
     
 

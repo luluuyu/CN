@@ -8,7 +8,8 @@
 
 #import "GTableViewCell.h"
 @interface GTableViewCell ()
-@property (nonatomic,copy)NSString *lastObj;
+
+
 
 @end
 
@@ -33,11 +34,11 @@
     GTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     
     if (cell == nil) {
+        
         cell = [[NSBundle mainBundle] loadNibNamed:@"GTableViewCell" owner:nil options:nil][0];
         
+        
     }
-    
-
     
     return cell;
 }

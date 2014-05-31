@@ -20,26 +20,23 @@
 #import "GStatus.h"
 #import "UIImage+UIImage_G.h"
 #import "MJRefresh.h"
+#import "MBProgressHUD+MJ.h"
+#import "SDWebImageManager.h"
+#import "UIImageView+WebCache.h"
 
 
 
-@interface GViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MJRefreshBaseViewDelegate> {
-	NSArray *_dataItems;
-}
-@property (nonatomic, weak) GTableViewCell *tableViewCell;
-@property (nonatomic, weak) UIScrollView *scrollView;
-@property (nonatomic, weak) UITableView *tableView;
+@interface GViewController ()<MJRefreshBaseViewDelegate>
+
+
+@property (nonatomic, weak  ) UIPageControl       *pageControl;
+@property (nonatomic, copy  ) NSArray             *array;                  //60条首页内容
+@property (nonatomic, weak  ) GStatus             *status;
+@property (nonatomic, strong) NSTimer             *timer;                  //定时器
+@property (nonatomic, weak  ) MJRefreshFooterView *footer;
+@property (nonatomic, weak  ) MJRefreshHeaderView *header;
+@property (nonatomic, weak  ) UIRefreshControl    *refreshControl;
 @property (nonatomic, readonly, getter=isRefreshing) BOOL refreshing;
-@property (weak, nonatomic)  UIPageControl *pageControl;
-@property (nonatomic, copy) NSArray *array;                              //60条首页内容
-@property (nonatomic, weak) GStatus *status;
-/**
- *  定时器
- */
-@property (nonatomic, strong) NSTimer *timer;
-
-@property (nonatomic, weak) MJRefreshFooterView *footer;
-@property (nonatomic, weak) MJRefreshHeaderView *header;
 
 @end
 
@@ -50,36 +47,22 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	
-    [self setupTableView];
+	self.tableView.rowHeight = 300;
     
-    [self setupScrollPic];
+    
+    // 取出最大sid
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sidMax = [defaults stringForKey:@"maxSid"];
+    // 加载数据 判断是否首次打开
+    if (sidMax) {
+        [self loadData:sidMax];
+    }
 
-    [self loadNewData];
+    // 执行刷新操作
+    [self setupRefreshView];
 }
 
-- (void)setupScrollPic
-{
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,-130, 320, 130)];
-    self.scrollView = scrollView;
-    self.scrollView.delegate =self;
-    [self setImage:scrollView];
-    self.tableView.contentInset = UIEdgeInsetsMake(130, 0, 0, 0);
-    self.tableView.rowHeight = 150;
-    [self.tableView addSubview:self.scrollView];
-    [self.view addSubview:self.tableView];
-}
-
-- (void)setupTableView
-{
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568) style:UITableViewStylePlain];
-    tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    self.tableView = tableView;
-}
-
-- (void)refresh
+- (void)setupRefreshView
 {
     // 1.下拉刷新
     MJRefreshHeaderView *header = [MJRefreshHeaderView header];
@@ -89,12 +72,31 @@
     [header beginRefreshing];
     self.header = header;
     
+    
+    
     // 2.上拉刷新(上拉加载更多数据)
     MJRefreshFooterView *footer = [MJRefreshFooterView footer];
     footer.scrollView = self.tableView;
     footer.delegate = self;
     self.footer = footer;
+    footer.beginRefreshingBlock = ^(MJRefreshBaseView *refreshView){
+        IWLog(@"refreshing.....");
+    };
+    
+    
+    
 }
+
+- (void)dealloc
+{
+    // 释放内存
+    [self.header free];
+    [self.footer free];
+}
+
+
+
+
 
 /**
  *  刷新控件进入开始刷新状态的时候调用
@@ -105,12 +107,28 @@
         [self loadOldData];
     } else { // 下拉刷新
         [self loadNewData];
+        [self.header endRefreshing];
     }
+}
+
+- (void)loadData:(NSString *)sidMax
+{
+    
+    // 软件刚刚被打开, 首先先把数据库里面的数据加载进来
+    GStatusesSid *param = [[GStatusesSid alloc]init];
+    param.sid_max   = [sidMax intValue];
+    param.sid_since = [sidMax intValue];
+    param.sid_end   = param.sid_since - 62;
+    
+    NSArray *sa = [GStatusCacheTool statuesWithParam:param];
+    self.array  = [GStatus objectArrayWithKeyValuesArray:sa];
+    
+    
 }
 
 - (void)loadOldData
 {
-    
+    return;
 }
 
 - (void)loadNewData
@@ -122,7 +140,11 @@
     // 发送网络请求 请求成功回调回来
     [GHTTPTool getStatusesFromNetwork:[sidMax intValue] success:^(NSArray *newData) {
         // 请求成功回调回来 返回最新的数据
-        self.array = newData;
+//        self.array = newData;
+        // 刷新表格
+        [self.tableView reloadData];
+        [self.header endRefreshing];
+        
     } failure:^(NSError *error) {
         
         // 网络请求失败, 返回数据库中存储的最前面的60条数据
@@ -133,6 +155,8 @@
         
         NSArray *sa = [GStatusCacheTool statuesWithParam:param];
         self.array  = [GStatus objectArrayWithKeyValuesArray:sa];
+        
+        [MBProgressHUD showError:@"无网络"];
     }];
     
     
@@ -141,11 +165,7 @@
 
 
 
-- (void)onGetResponse
-{
-	   
-	[self.tableView reloadData];
-}
+
 
 
 #pragma mark - Table View
@@ -153,21 +173,27 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 60;
+    if (self.array.count > 0) {
+        return self.array.count;
+    }
+	return 1;
 }
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+   
     GTableViewCell *cell = [GTableViewCell cellWithTableView:tableView];
-    if (self.array) {
+    
+    if (self.array > 0) {
         GStatus *s = self.array[indexPath.row];
         cell.contLable.text  = s.hometext_show_short;
         cell.titleLable.text = s.title_show;
-        cell.imageV.image = [UIImage imageWithName:@"3.jpg"];
+        [cell.imageV setImageWithURL:[NSURL URLWithString:s.logo] placeholderImage:[UIImage imageWithName:@"3.jpg"]];
+        cell.bottomLabel.text = [NSString stringWithFormat:@" %@ 发布于%@   %@ 次阅读",s.aid, s.time,s.counter];
+        cell.backgroundColor = [UIColor colorWithRed:251 green:251 blue:251 alpha:0];
         
     }
-    
     
 	return cell;
 }
@@ -185,114 +211,8 @@
 
 
 
-#pragma mark - 代理方法
-/**
- *  当scrollView正在滚动就会调用
- */
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    // 根据scrollView的滚动位置决定pageControl显示第几页
-    CGFloat scrollW = scrollView.frame.size.width;
-    int page = (scrollView.contentOffset.x + scrollW * 0.5) / scrollW;
-    self.pageControl.currentPage = page;
-}
-
-/**
- *  开始拖拽的时候调用
- */
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    // 停止定时器(一旦定时器停止了,就不能再使用)
-    [self removeTimer];
-}
-
-/**
- *  停止拖拽的时候调用
- */
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    // 开启定时器
-    [self addTimer];
-}
-
-#pragma scrollView
-- (void)setImage:(UIScrollView *)scrollView
-{
-    
-    CGFloat imageW = self.scrollView.frame.size.width;
-    CGFloat imageH = self.scrollView.frame.size.height;
-    CGFloat imageY = 0;
-    
-    // 1.添加5张图片到scrollView中
-    for (int i = 0; i<GImageCount; i++) {
-        UIImageView *imageView = [[UIImageView alloc] init];
-        
-        // 设置frame
-        CGFloat imageX = i * imageW;
-        imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-        
-        // 设置图片
-        NSString *name = [NSString stringWithFormat:@"img_0%d", i + 1];
-        imageView.image = [UIImage imageNamed:name];
-        
-        [self.scrollView addSubview:imageView];
-    }
-    
-    // 2.设置内容尺寸
-    CGFloat contentW = GImageCount * imageW;
-    self.scrollView.contentSize = CGSizeMake(contentW, 0);
-    
-    // 3.隐藏水平滚动条
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    
-    // 4.分页
-    self.scrollView.pagingEnabled = YES;
-    //    self.scrollView.delegate = self;
-    
-    // 5.设置pageControl的总页数
-    self.pageControl.numberOfPages = GImageCount;
-    
-    // 6.添加定时器(每隔2秒调用一次self 的nextImage方法)
-    [self addTimer];
-    
-    
-    
-}
 
 
-/**
- *  添加定时器
- */
-- (void)addTimer
-{
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(nextImage) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-}
-
-/**
- *  移除定时器
- */
-- (void)removeTimer
-{
-    [self.timer invalidate];
-    self.timer = nil;
-}
-
-- (void)nextImage
-{
-    // 1.增加pageControl的页码
-    int page = 0;
-    if (self.pageControl.currentPage == GImageCount - 1) {
-        page = 0;
-    } else {
-        page = (int)self.pageControl.currentPage + 1;
-    }
-    
-    // 2.计算scrollView滚动的位置
-    CGFloat offsetX = page * self.scrollView.frame.size.width;
-    CGPoint offset = CGPointMake(offsetX, 0);
-    [self.scrollView setContentOffset:offset animated:YES];
-}
 
 @end
 

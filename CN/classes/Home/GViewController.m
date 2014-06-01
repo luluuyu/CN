@@ -55,7 +55,7 @@
     NSString *sidMax = [defaults stringForKey:@"maxSid"];
     // 加载数据 判断是否首次打开
     if (sidMax) {
-        [self loadData:sidMax];
+        [self loadDataFromSQL:sidMax];
     }
 
     // 执行刷新操作
@@ -97,10 +97,7 @@
 
 
 
-
-/**
- *  刷新控件进入开始刷新状态的时候调用
- */
+#pragma mark - 刷新控件开始刷新的时候调用这个方法
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
 {
     if ([refreshView isKindOfClass:[MJRefreshFooterView class]]) { // 上拉刷新
@@ -111,10 +108,9 @@
     }
 }
 
-- (void)loadData:(NSString *)sidMax
+// 软件刚刚被打开(除了首次以外), 首先先把数据库里面的数据加载进来
+- (void)loadDataFromSQL:(NSString *)sidMax
 {
-    
-    // 软件刚刚被打开, 首先先把数据库里面的数据加载进来
     GStatusesSid *param = [[GStatusesSid alloc]init];
     param.sid_max   = [sidMax intValue];
     param.sid_since = [sidMax intValue];
@@ -122,8 +118,7 @@
     
     NSArray *sa = [GStatusCacheTool statuesWithParam:param];
     self.array  = [GStatus objectArrayWithKeyValuesArray:sa];
-    
-    
+ 
 }
 
 - (void)loadOldData
@@ -138,12 +133,20 @@
     NSString *sidMax = [defaults stringForKey:@"maxSid"];
     
     // 发送网络请求 请求成功回调回来
-    [GHTTPTool getStatusesFromNetwork:[sidMax intValue] success:^(NSArray *newData) {
+    GHTTPTool * a = [[GHTTPTool alloc]init];
+    [a getStatusesFromNetwork:[sidMax intValue] success:^(NSArray *newData) {
+        
         // 请求成功回调回来 返回最新的数据
-//        self.array = newData;
-        // 刷新表格
-        [self.tableView reloadData];
-        [self.header endRefreshing];
+        self.array = newData;
+        
+        // 回到主线程刷新表格
+        NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
+             [self.tableView reloadData];
+             [self.header endRefreshing];
+        }];
+        // UI的更新需要回到主线程
+        [[NSOperationQueue mainQueue] addOperation:opFailure];
+        
         
     } failure:^(NSError *error) {
         
@@ -156,7 +159,19 @@
         NSArray *sa = [GStatusCacheTool statuesWithParam:param];
         self.array  = [GStatus objectArrayWithKeyValuesArray:sa];
         
-        [MBProgressHUD showError:@"无网络"];
+        NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
+            //判断软件是不是首次被打开
+            if (sidMax) {
+                [self loadDataFromSQL:sidMax];
+            }
+            [MBProgressHUD showError:@"亲,没网啊!!"];
+            
+        }];
+        // 回到主线程更新 UI
+        [[NSOperationQueue mainQueue] addOperation:opFailure];
+
+        
+            
     }];
     
     

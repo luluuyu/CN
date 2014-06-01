@@ -12,21 +12,15 @@
 #import "MJExtension.h"
 #import "FMDB.h"
 #import "GStatusCacheTool.h"
+#import "AFNetworking.h"
 
 @interface GHTTPTool ()
-@property (nonatomic,copy)NSArray * statusArray;
+
 @end
 
 @implementation GHTTPTool
 
-//+ (NSArray *)getStatusesFrom:(int)sid
-//{
-//    if (sid ) {
-//        <#statements#>
-//    }
-//    
-//    return <#expression#>;
-//}
+
 + (void)getStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure
 {
     [[[GHTTPTool alloc]init] getStatusesFromNetwork:sid success:^(NSArray *newData) {
@@ -43,7 +37,7 @@
 - (void)getStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure {
     
     
-    NSURL *url = [NSURL URLWithString:[self test3]];
+    NSURL *url = [NSURL URLWithString:[self getURLStr]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     NSDictionary *headerFields = @{
                                    @"Host"      :  @"www.cnbeta.com",
@@ -70,8 +64,9 @@
     
     
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc]init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        
         if (!connectionError) {
-
             
             NSString *strReturn = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             strReturn = [self replaceUnicode:strReturn];
@@ -125,7 +120,6 @@
             
             NSArray *statusArray = [GStatus objectArrayWithKeyValuesArray:ma];
             
-            self.statusArray = statusArray;
             NSString *maxSid = [[NSString alloc]init];
             GStatus *status = statusArray[0];
             maxSid = status.sid;
@@ -135,7 +129,7 @@
             [defaults setObject:maxSid forKey:@"maxSid"];
             
             // 网络请求访问成功返回数据
-            success (self.statusArray);
+            success (statusArray);
         }else {
             failure (failure);
             
@@ -148,7 +142,7 @@
 }
 
 
-- (NSString *)test3
+- (NSString *)getURLStr
 {
     
     // 从1970到现在的时间秒
@@ -175,6 +169,10 @@
     return strR;
 }
 
+
+/**
+ *  解析时间
+ */
 - (NSString *)parseTime:(NSString *)arr
 
 {

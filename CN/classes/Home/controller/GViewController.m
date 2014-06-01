@@ -101,10 +101,11 @@
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
 {
     if ([refreshView isKindOfClass:[MJRefreshFooterView class]]) { // 上拉刷新
+        
         [self loadOldData];
     } else { // 下拉刷新
         [self loadNewData];
-        [self.header endRefreshing];
+        
     }
 }
 
@@ -123,7 +124,16 @@
 
 - (void)loadOldData
 {
-    return;
+    NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
+        //判断软件是不是首次被打开
+//        if (sidMax) {
+//            [self loadDataFromSQL:sidMax];
+//        }
+        [MBProgressHUD showError:@"亲,没网啊!!"];
+        [self.footer endRefreshing];
+    }];
+    // 回到主线程更新 UI
+    [[NSOperationQueue mainQueue] addOperation:opFailure];
 }
 
 - (void)loadNewData
@@ -147,7 +157,6 @@
         // UI的更新需要回到主线程
         [[NSOperationQueue mainQueue] addOperation:opFailure];
         
-        
     } failure:^(NSError *error) {
         
         // 网络请求失败, 返回数据库中存储的最前面的60条数据
@@ -165,16 +174,12 @@
                 [self loadDataFromSQL:sidMax];
             }
             [MBProgressHUD showError:@"亲,没网啊!!"];
-            
+            [self.header endRefreshing];
         }];
         // 回到主线程更新 UI
         [[NSOperationQueue mainQueue] addOperation:opFailure];
-
-        
-            
+  
     }];
-    
-    
     
 }
 

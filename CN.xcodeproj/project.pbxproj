@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27280F12193AEE0200677A41 /* GStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F0F193AEE0200677A41 /* GStatus.m */; };
+		27280F13193AEE0200677A41 /* GStatusesSid.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F11193AEE0200677A41 /* GStatusesSid.m */; };
+		27280F16193AEE4D00677A41 /* GViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F15193AEE4D00677A41 /* GViewController.m */; };
+		27280F1C193AEE5400677A41 /* GSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F18193AEE5400677A41 /* GSView.m */; };
+		27280F1D193AEE5400677A41 /* GTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F1A193AEE5400677A41 /* GTableViewCell.m */; };
+		27280F1E193AEE5400677A41 /* GTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27280F1B193AEE5400677A41 /* GTableViewCell.xib */; };
 		2768A382191D38DF005C4C24 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2768A366191D38DF005C4C24 /* MKAnnotationView+WebCache.m */; };
 		2768A383191D38DF005C4C24 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 2768A368191D38DF005C4C24 /* NSData+ImageContentType.m */; };
 		2768A384191D38DF005C4C24 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2768A36A191D38DF005C4C24 /* SDImageCache.m */; };
@@ -44,9 +50,7 @@
 		2779069D191D121C0081C136 /* GMasterParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 2779066E191D121C0081C136 /* GMasterParse.m */; };
 		2779069E191D121C0081C136 /* GParseImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27790670191D121C0081C136 /* GParseImage.m */; };
 		277906A4191D121C0081C136 /* GHTTPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27790680191D121C0081C136 /* GHTTPTool.m */; };
-		277906A5191D121C0081C136 /* GStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 27790682191D121C0081C136 /* GStatus.m */; };
 		277906A6191D121C0081C136 /* GStatusCacheTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27790684191D121C0081C136 /* GStatusCacheTool.m */; };
-		277906A7191D121C0081C136 /* GStatusesSid.m in Sources */ = {isa = PBXBuildFile; fileRef = 27790686191D121C0081C136 /* GStatusesSid.m */; };
 		277906A9191D121C0081C136 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2779068C191D121C0081C136 /* NSString+Extension.m */; };
 		277906AA191D121C0081C136 /* SHXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2779068F191D121C0081C136 /* SHXMLParser.m */; };
 		277906AB191D121C0081C136 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 27790691191D121C0081C136 /* TFHpple.m */; };
@@ -67,10 +71,6 @@
 		277906DA191D12EF0081C136 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 277906CF191D12EF0081C136 /* NSObject+MJCoding.m */; };
 		277906DB191D12EF0081C136 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 277906D1191D12EF0081C136 /* NSObject+MJKeyValue.m */; };
 		277906DC191D12EF0081C136 /* NSObject+MJMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 277906D3191D12EF0081C136 /* NSObject+MJMember.m */; };
-		277906E9191D18FA0081C136 /* GSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 277906E1191D18FA0081C136 /* GSView.m */; };
-		277906EA191D18FA0081C136 /* GTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 277906E3191D18FA0081C136 /* GTableViewCell.m */; };
-		277906EB191D18FA0081C136 /* GTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277906E4191D18FA0081C136 /* GTableViewCell.xib */; };
-		277906EC191D18FA0081C136 /* GViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277906E6191D18FA0081C136 /* GViewController.m */; };
 		2793738D191DE2F400AC7108 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27937383191DE2F400AC7108 /* MJRefresh.bundle */; };
 		2793738E191DE2F400AC7108 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27937386191DE2F400AC7108 /* MJRefreshBaseView.m */; };
 		2793738F191DE2F400AC7108 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 27937388191DE2F400AC7108 /* MJRefreshConst.m */; };
@@ -102,6 +102,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27280F0E193AEE0200677A41 /* GStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatus.h; sourceTree = "<group>"; };
+		27280F0F193AEE0200677A41 /* GStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStatus.m; sourceTree = "<group>"; };
+		27280F10193AEE0200677A41 /* GStatusesSid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatusesSid.h; sourceTree = "<group>"; };
+		27280F11193AEE0200677A41 /* GStatusesSid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStatusesSid.m; sourceTree = "<group>"; };
+		27280F14193AEE4D00677A41 /* GViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GViewController.h; path = controller/GViewController.h; sourceTree = "<group>"; };
+		27280F15193AEE4D00677A41 /* GViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GViewController.m; path = controller/GViewController.m; sourceTree = "<group>"; };
+		27280F17193AEE5400677A41 /* GSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSView.h; sourceTree = "<group>"; };
+		27280F18193AEE5400677A41 /* GSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSView.m; sourceTree = "<group>"; };
+		27280F19193AEE5400677A41 /* GTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTableViewCell.h; sourceTree = "<group>"; };
+		27280F1A193AEE5400677A41 /* GTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTableViewCell.m; sourceTree = "<group>"; };
+		27280F1B193AEE5400677A41 /* GTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTableViewCell.xib; sourceTree = "<group>"; };
 		2768A365191D38DF005C4C24 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		2768A366191D38DF005C4C24 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		2768A367191D38DF005C4C24 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -174,12 +185,8 @@
 		27790670191D121C0081C136 /* GParseImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GParseImage.m; path = ../../GParseImage.m; sourceTree = "<group>"; };
 		2779067F191D121C0081C136 /* GHTTPTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTTPTool.h; sourceTree = "<group>"; };
 		27790680191D121C0081C136 /* GHTTPTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTTPTool.m; sourceTree = "<group>"; };
-		27790681191D121C0081C136 /* GStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatus.h; sourceTree = "<group>"; };
-		27790682191D121C0081C136 /* GStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStatus.m; sourceTree = "<group>"; };
 		27790683191D121C0081C136 /* GStatusCacheTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatusCacheTool.h; sourceTree = "<group>"; };
 		27790684191D121C0081C136 /* GStatusCacheTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStatusCacheTool.m; sourceTree = "<group>"; };
-		27790685191D121C0081C136 /* GStatusesSid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatusesSid.h; sourceTree = "<group>"; };
-		27790686191D121C0081C136 /* GStatusesSid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStatusesSid.m; sourceTree = "<group>"; };
 		2779068B191D121C0081C136 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		2779068C191D121C0081C136 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		2779068E191D121C0081C136 /* SHXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHXMLParser.h; sourceTree = "<group>"; };
@@ -222,13 +229,6 @@
 		277906D1191D12EF0081C136 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
 		277906D2191D12EF0081C136 /* NSObject+MJMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJMember.h"; sourceTree = "<group>"; };
 		277906D3191D12EF0081C136 /* NSObject+MJMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJMember.m"; sourceTree = "<group>"; };
-		277906E0191D18FA0081C136 /* GSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSView.h; path = ../GSView.h; sourceTree = "<group>"; };
-		277906E1191D18FA0081C136 /* GSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GSView.m; path = ../GSView.m; sourceTree = "<group>"; };
-		277906E2191D18FA0081C136 /* GTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTableViewCell.h; path = ../GTableViewCell.h; sourceTree = "<group>"; };
-		277906E3191D18FA0081C136 /* GTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTableViewCell.m; path = ../GTableViewCell.m; sourceTree = "<group>"; };
-		277906E4191D18FA0081C136 /* GTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GTableViewCell.xib; path = ../GTableViewCell.xib; sourceTree = "<group>"; };
-		277906E5191D18FA0081C136 /* GViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GViewController.h; sourceTree = "<group>"; };
-		277906E6191D18FA0081C136 /* GViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GViewController.m; sourceTree = "<group>"; };
 		27937383191DE2F400AC7108 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		27937384191DE2F400AC7108 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		27937385191DE2F400AC7108 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
@@ -429,12 +429,8 @@
 			children = (
 				2779067F191D121C0081C136 /* GHTTPTool.h */,
 				27790680191D121C0081C136 /* GHTTPTool.m */,
-				27790681191D121C0081C136 /* GStatus.h */,
-				27790682191D121C0081C136 /* GStatus.m */,
 				27790683191D121C0081C136 /* GStatusCacheTool.h */,
 				27790684191D121C0081C136 /* GStatusCacheTool.m */,
-				27790685191D121C0081C136 /* GStatusesSid.h */,
-				27790686191D121C0081C136 /* GStatusesSid.m */,
 			);
 			path = "HTTP Tool";
 			sourceTree = "<group>";
@@ -523,8 +519,8 @@
 			isa = PBXGroup;
 			children = (
 				277906DF191D18FA0081C136 /* controller */,
-				277906E5191D18FA0081C136 /* GViewController.h */,
-				277906E6191D18FA0081C136 /* GViewController.m */,
+				27280F14193AEE4D00677A41 /* GViewController.h */,
+				27280F15193AEE4D00677A41 /* GViewController.m */,
 				277906E7191D18FA0081C136 /* model */,
 				277906E8191D18FA0081C136 /* view */,
 			);
@@ -541,6 +537,10 @@
 		277906E7191D18FA0081C136 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				27280F0E193AEE0200677A41 /* GStatus.h */,
+				27280F0F193AEE0200677A41 /* GStatus.m */,
+				27280F10193AEE0200677A41 /* GStatusesSid.h */,
+				27280F11193AEE0200677A41 /* GStatusesSid.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -548,13 +548,13 @@
 		277906E8191D18FA0081C136 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				27280F17193AEE5400677A41 /* GSView.h */,
+				27280F18193AEE5400677A41 /* GSView.m */,
+				27280F19193AEE5400677A41 /* GTableViewCell.h */,
+				27280F1A193AEE5400677A41 /* GTableViewCell.m */,
+				27280F1B193AEE5400677A41 /* GTableViewCell.xib */,
 				2779066F191D121C0081C136 /* GParseImage.h */,
 				27790670191D121C0081C136 /* GParseImage.m */,
-				277906E2191D18FA0081C136 /* GTableViewCell.h */,
-				277906E3191D18FA0081C136 /* GTableViewCell.m */,
-				277906E4191D18FA0081C136 /* GTableViewCell.xib */,
-				277906E0191D18FA0081C136 /* GSView.h */,
-				277906E1191D18FA0081C136 /* GSView.m */,
 				27C1AE18191DB0AC00C5E9B1 /* 3.jpg */,
 			);
 			path = view;
@@ -741,7 +741,7 @@
 				27C1AE19191DB0AC00C5E9B1 /* 3.jpg in Resources */,
 				276DB18F191D0A92003E5BE4 /* Images.xcassets in Resources */,
 				2793738D191DE2F400AC7108 /* MJRefresh.bundle in Resources */,
-				277906EB191D18FA0081C136 /* GTableViewCell.xib in Resources */,
+				27280F1E193AEE5400677A41 /* GTableViewCell.xib in Resources */,
 				276DB19A191D0B5F003E5BE4 /* CN-Info.plist in Resources */,
 				276DB18E191D0A92003E5BE4 /* InfoPlist.strings in Resources */,
 				2795A3C2193A127C005B0E57 /* MBProgressHUD.bundle in Resources */,
@@ -773,13 +773,12 @@
 				27C1AE1C191DB23500C5E9B1 /* UIImage+UIImage_G.m in Sources */,
 				276CB134193AC2BD00B4FE58 /* AFURLConnectionOperation.m in Sources */,
 				2779069B191D121C0081C136 /* GDetailView.m in Sources */,
-				277906A5191D121C0081C136 /* GStatus.m in Sources */,
 				277906AA191D121C0081C136 /* SHXMLParser.m in Sources */,
 				2768A382191D38DF005C4C24 /* MKAnnotationView+WebCache.m in Sources */,
 				2779069C191D121C0081C136 /* GDetailViewController.m in Sources */,
 				277906D5191D12EF0081C136 /* MJIvar.m in Sources */,
+				27280F16193AEE4D00677A41 /* GViewController.m in Sources */,
 				2768A38E191D38DF005C4C24 /* UIImage+WebP.m in Sources */,
-				277906EA191D18FA0081C136 /* GTableViewCell.m in Sources */,
 				2795A3C1193A127C005B0E57 /* MBProgressHUD+MJ.m in Sources */,
 				2768A384191D38DF005C4C24 /* SDImageCache.m in Sources */,
 				277906A9191D121C0081C136 /* NSString+Extension.m in Sources */,
@@ -788,6 +787,7 @@
 				276CB12F193AC2BD00B4FE58 /* AFHTTPRequestOperation.m in Sources */,
 				276CB132193AC2BD00B4FE58 /* AFNetworkReachabilityManager.m in Sources */,
 				2768A38D191D38DF005C4C24 /* UIImage+MultiFormat.m in Sources */,
+				27280F1C193AEE5400677A41 /* GSView.m in Sources */,
 				277906AE191D121C0081C136 /* XPathQuery.m in Sources */,
 				277906AC191D121C0081C136 /* TFHppleElement.m in Sources */,
 				277906AD191D121C0081C136 /* WebServices.m in Sources */,
@@ -803,15 +803,14 @@
 				277906BE191D128E0081C136 /* FMDatabaseQueue.m in Sources */,
 				277906D6191D12EF0081C136 /* MJMember.m in Sources */,
 				277906DB191D12EF0081C136 /* NSObject+MJKeyValue.m in Sources */,
-				277906EC191D18FA0081C136 /* GViewController.m in Sources */,
 				2768A38F191D38DF005C4C24 /* UIImageView+WebCache.m in Sources */,
 				277906BF191D128E0081C136 /* FMResultSet.m in Sources */,
+				27280F1D193AEE5400677A41 /* GTableViewCell.m in Sources */,
 				276CB131193AC2BD00B4FE58 /* AFHTTPSessionManager.m in Sources */,
 				277906DC191D12EF0081C136 /* NSObject+MJMember.m in Sources */,
-				277906E9191D18FA0081C136 /* GSView.m in Sources */,
 				277906A6191D121C0081C136 /* GStatusCacheTool.m in Sources */,
 				277906A4191D121C0081C136 /* GHTTPTool.m in Sources */,
-				277906A7191D121C0081C136 /* GStatusesSid.m in Sources */,
+				27280F12193AEE0200677A41 /* GStatus.m in Sources */,
 				27937391191DE2F400AC7108 /* MJRefreshHeaderView.m in Sources */,
 				276CB137193AC2BD00B4FE58 /* AFURLSessionManager.m in Sources */,
 				277906BC191D128E0081C136 /* FMDatabaseAdditions.m in Sources */,
@@ -827,6 +826,7 @@
 				2768A38B191D38DF005C4C24 /* UIButton+WebCache.m in Sources */,
 				2768A387191D38DF005C4C24 /* SDWebImageDownloader.m in Sources */,
 				2779069D191D121C0081C136 /* GMasterParse.m in Sources */,
+				27280F13193AEE0200677A41 /* GStatusesSid.m in Sources */,
 				2795A3C3193A127C005B0E57 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

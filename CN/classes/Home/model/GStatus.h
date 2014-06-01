@@ -10,7 +10,7 @@
 
 @interface GStatus : NSObject
 @property (nonatomic,copy  )NSString        *sid;                          //sid
-@property (nonatomic,copy  )NSString        *aid;                          //aid
+@property (nonatomic,copy  )NSString        *aid;                          //作者
 @property (nonatomic,copy  )NSString        *title_show;                   //新闻标题
 @property (nonatomic,copy  )NSString        *hometext_show_short;          //新闻子标题
 @property (nonatomic,copy  )NSString        *logo;                         //logo

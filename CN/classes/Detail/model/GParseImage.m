@@ -7,7 +7,6 @@
 //
 
 #import "GParseImage.h"
-#import "GParseImage.h"
 #import <QuartzCore/QuartzCore.h>
 
 

@@ -15,17 +15,10 @@
 
 @implementation GTableViewCell
 
-- (void)awakeFromNib
-{
-    self.titleLable.lineBreakMode = NSLineBreakByCharWrapping;
-    self.titleLable.numberOfLines = 0;
-}
-
+// 去除 cell 的选中状态
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    
 }
 
 + (instancetype)cellWithTableView:(UITableView *)tableView
@@ -36,7 +29,6 @@
     if (cell == nil) {
         
         cell = [[NSBundle mainBundle] loadNibNamed:@"GTableViewCell" owner:nil options:nil][0];
-        
         
     }
     

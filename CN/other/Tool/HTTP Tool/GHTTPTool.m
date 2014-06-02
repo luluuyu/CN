@@ -13,6 +13,7 @@
 #import "FMDB.h"
 #import "GStatusCacheTool.h"
 #import "AFNetworking.h"
+#import "GStatusesSid.h"
 
 @interface GHTTPTool ()
 
@@ -21,9 +22,9 @@
 @implementation GHTTPTool
 
 
-+ (void)getStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure
++ (void)getNewStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure
 {
-    [[[GHTTPTool alloc]init] getStatusesFromNetwork:sid success:^(NSArray *newData) {
+    [[[GHTTPTool alloc]init] getNewStatusesFromNetwork:sid success:^(NSArray *newData) {
         if (success) {
             success(newData);
         }
@@ -34,10 +35,30 @@
     }];
 }
 
-- (void)getStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure {
++ (void)getOldStatusesFromNetwork:(GStatusesSid *)param success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure
+{
+    [[[GHTTPTool alloc]init] getOldStatusesFromNetwork:param success:^(NSArray *newData) {
+        if (success) {
+            success(newData);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(failure);
+        }
+    }];
+}
+
+- (void)getOldStatusesFromNetwork:(GStatusesSid *)param success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure {
     
+    // 先取出数据中最大和最小的 sid
     
-    NSURL *url = [NSURL URLWithString:[self getURLStr]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    NSString *max_sid        = [defaults objectForKey:@"maxSid"];
+//    NSString *mini_sid       = [defaults objectForKey:@"miniSid"];
+    
+    // 
+    
+    NSURL *url = [NSURL URLWithString:[self getURLStr:param.page]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     NSDictionary *headerFields = @{
                                    @"Host"      :  @"www.cnbeta.com",
@@ -66,46 +87,146 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc]init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
         
+        
         if (!connectionError) {
             
             NSString *strReturn = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            strReturn = [self replaceUnicode:strReturn];
-            NSRange range1 = [strReturn rangeOfString:@"jQuery18009503329019265727_1371789998227({\"status\":\"success\",\"result\":{\"list\":"];
-            NSRange range2 = [strReturn rangeOfString:@",\"pager\":\"\",\"auto\":1,\"type\":\"all\"}})"];
+            
+            NSRange range1 = [strReturn rangeOfString:@"[{\"sid\":\""];
+            NSRange range2 = [strReturn rangeOfString:@",\"pager\":\""];
             
             
-            strReturn = [strReturn substringFromIndex:range1.length ];
-            strReturn = [strReturn substringToIndex:strReturn.length - range2.length];
+            strReturn = [strReturn substringFromIndex:range1.location ];
+            strReturn = [strReturn substringToIndex:range2.location - range1.location];
             
             
             
             NSArray *arr = [strReturn componentsSeparatedByString:NSLocalizedString(@"},", nil)];
             NSMutableArray *ma = [NSMutableArray array];
-            for (int i = 0; i < 60; i++) {
+            for (int i = 0; i < arr.count; i++) {
+                
+                NSString *status = [self replaceUnicode:arr[i]];
                 
                 NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
                 
                 
-                [dict setValue:[self parse:@"sid" arr:arr[i]] forKey:@"sid"];
-                [dict setValue:[self parse:@"aid" arr:arr[i]] forKey:@"aid"];
-                [dict setValue:[self parse:@"title_show" arr:arr[i]] forKey:@"title_show"];
-                [dict setValue:[self parse:@"hometext_show_short" arr:arr[i]]    forKey:@"hometext_show_short"];
-                [dict setValue:[self parse:@"logo" arr:arr[i]]    forKey:@"logo"];
-                [dict setValue:[self parse:@"url_show" arr:arr[i]]    forKey:@"url_show"];
-                [dict setValue:[self parse:@"counter" arr:arr[i]]    forKey:@"counter"];
-                [dict setValue:[self parse:@"score" arr:arr[i]]    forKey:@"score"];
-                [dict setValue:[self parse:@"ratings_story" arr:arr[i]]    forKey:@"ratings_story"];
-                [dict setValue:[self parse:@"dig" arr:arr[i]]    forKey:@"dig"];
-                [dict setObject:[self parseTime:arr[i]] forKey:@"time"];
+                [dict setValue:[self parse:@"sid" arr:status]        forKey:@"sid"];
+                [dict setValue:[self parse:@"aid" arr:status]        forKey:@"aid"];
+                [dict setValue:[self parse:@"title_show" arr:status] forKey:@"title_show"];
+                [dict setValue:[self parse:@"logo" arr:status]       forKey:@"logo"];
+                [dict setValue:[self parse:@"url_show" arr:status]   forKey:@"url_show"];
+                [dict setValue:[self parse:@"counter" arr:status]    forKey:@"counter"];
+                [dict setValue:[self parse:@"score" arr:status]      forKey:@"score"];
+                [dict setValue:[self parse:@"dig" arr:status]        forKey:@"dig"];
+                [dict setValue:[self parseTime:status]               forKey:@"time"];
+                [dict setValue:[self parse:@"ratings_story" arr:status]       forKey:@"ratings_story"];
+                [dict setValue:[self parse:@"hometext_show_short" arr:status] forKey:@"hometext_show_short"];
                 
                 
                 [ma addObject:dict];
                 
+                // 当前数据的sid
+                int currentSid = [dict[@"sid"] intValue];
                 
-                //取出最大sid
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                NSString *sidMax = [defaults stringForKey:@"maxSid"];
-                unsigned long sidMaxInt = [sidMax intValue];
+                // 当前数据的sid sid 大于 本地数据库存储的最大 sid
+                if (![GStatusCacheTool isStatusAlreadyIn:currentSid]) {
+                    [GStatusCacheTool addStatus:dict];
+                    // 判断是否需要写入本次获取到的最小 sid
+                    if (i == (arr.count - 1) )  {
+                        [defaults setObject:[NSString stringWithFormat:@"%d",currentSid] forKey:@"miniSid"];
+                        [defaults synchronize];
+                    }
+                }
+            };
+            
+            // 转成GStatus模型
+            NSArray *statusArray = [GStatus objectArrayWithKeyValuesArray:ma];
+            
+            // 从数据库中取出数据
+           
+            success (statusArray);
+            
+        }else {
+            failure (failure);
+            
+        }
+        
+    }];
+    
+    
+    
+}
+
+- (void)getNewStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure {
+    
+    
+    NSURL *url = [NSURL URLWithString:[self getURLStr:1]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSDictionary *headerFields = @{
+                                   @"Host"      :  @"www.cnbeta.com",
+                                   @"Referer"   :  @"http://www.cnbeta.com",
+                                   @"User-Agent":  @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10",
+                                   @"Connection":  @"keep-alive",
+                                   
+                                   };
+    
+    [request setAllHTTPHeaderFields:headerFields];
+    
+    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    
+    [request setTimeoutInterval: 60];
+    
+    [request setHTTPShouldHandleCookies:FALSE];
+    
+    [request setHTTPMethod:@"GET"];
+    
+    
+    
+    
+    
+    
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc]init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+
+        
+        if (!connectionError) {
+            
+            NSString *strReturn = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            
+            NSRange range1 = [strReturn rangeOfString:@"[{\"sid\":\""];
+            NSRange range2 = [strReturn rangeOfString:@",\"pager\":\""];
+            
+            
+            strReturn = [strReturn substringFromIndex:range1.location ];
+            strReturn = [strReturn substringToIndex:range2.location - range1.location];
+            
+            
+            
+            NSArray *arr = [strReturn componentsSeparatedByString:NSLocalizedString(@"},", nil)];
+            NSMutableArray *ma = [NSMutableArray array];
+            for (int i = 0; i < arr.count; i++) {
+                
+                
+                NSString *status = [self replaceUnicode:arr[i]];
+                
+                NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+                
+                
+                [dict setValue:[self parse:@"sid" arr:status]        forKey:@"sid"];
+                [dict setValue:[self parse:@"aid" arr:status]        forKey:@"aid"];
+                [dict setValue:[self parse:@"title_show" arr:status] forKey:@"title_show"];
+                [dict setValue:[self parse:@"logo" arr:status]       forKey:@"logo"];
+                [dict setValue:[self parse:@"url_show" arr:status]   forKey:@"url_show"];
+                [dict setValue:[self parse:@"counter" arr:status]    forKey:@"counter"];
+                [dict setValue:[self parse:@"score" arr:status]      forKey:@"score"];
+                [dict setValue:[self parse:@"dig" arr:status]        forKey:@"dig"];
+                [dict setValue:[self parseTime:status]               forKey:@"time"];
+                [dict setValue:[self parse:@"ratings_story" arr:status]       forKey:@"ratings_story"];
+                [dict setValue:[self parse:@"hometext_show_short" arr:status] forKey:@"hometext_show_short"];
+                
+                
+                [ma addObject:dict];
                 
                 //当前数据的sid
                 unsigned long currentSid = [dict[@"sid"] intValue];
@@ -118,18 +239,37 @@
                 
             };
             
+            // 转成GStatus模型
             NSArray *statusArray = [GStatus objectArrayWithKeyValuesArray:ma];
             
-            NSString *maxSid = [[NSString alloc]init];
-            GStatus *status = statusArray[0];
-            maxSid = status.sid;
-            
             //写入本次获取到的最大sid
+            GStatus *statusMax = statusArray[0];
+            NSString *maxSid = statusMax.sid;
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:maxSid forKey:@"maxSid"];
+            [defaults synchronize];
+            
+            //如果本机已经存储了一次 miniSid 先从本机取出, 如果没有进行创建
+            GStatus *statusMini = statusArray[arr.count - 1];
+            
+            NSString *miniSid = [defaults objectForKey:@"miniSid"];
+            NSLog(@"%@ -- %@",statusMini.sid,miniSid);
+            
+            if(miniSid == nil){
+                // 第一次写入
+                [defaults setObject:statusMini.sid forKey:@"miniSid"];
+                
+            }
+            
+            if ([miniSid intValue] > [statusMini.sid intValue]){
+                // 更新最小 sid
+                [defaults setObject:statusMini.sid forKey:@"miniSid"];
+                [defaults synchronize];
+            }
             
             // 网络请求访问成功返回数据
             success (statusArray);
+            
         }else {
             failure (failure);
             
@@ -142,7 +282,7 @@
 }
 
 
-- (NSString *)getURLStr
+- (NSString *)getURLStr:(int)page
 {
     
     // 从1970到现在的时间秒
@@ -152,7 +292,7 @@
     //转换成字符串
     NSString *sm = [NSString stringWithFormat:@"%lld",time];
     
-    NSString *urlStr = [NSString stringWithFormat:@"http://www.cnbeta.com/more.htm?jsoncallback=jQuery18009503329019265727_1371789998227&type=all&page=1&_=%@",sm];
+    NSString *urlStr = [NSString stringWithFormat:@"http://www.cnbeta.com/more.htm?jsoncallback=jQuery18009503329019265727_1371789998227&type=all&page=%d&_=%@",page,sm];
     
     return urlStr;
 }
@@ -188,16 +328,16 @@
     
     
     
-    NSString *tempStr1 = [unicodeStr stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
-    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    NSString* returnStr = [NSPropertyListSerialization propertyListFromData:tempData
+    NSString *tempStr1  = [unicodeStr stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
+    NSString *tempStr2  = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    NSString *tempStr3  = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
+    NSData   *tempData  = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *returnStr = [NSPropertyListSerialization propertyListFromData:tempData
                                                            mutabilityOption:NSPropertyListImmutable
                                                                      format:NULL
                                                            errorDescription:NULL];
 
-    
+
     return [returnStr stringByReplacingOccurrencesOfString:@"\\r\\n" withString:@"\n"];
 }
 

@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GMasterParse : NSObject
+@interface GHomeParse : NSObject
 
 @property (nonatomic,assign)int              sid;                          //sid
 @property (nonatomic,copy  )NSString        *title_show;                   //新闻标题

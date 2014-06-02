@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class GStatusesSid ;
 @interface GHTTPTool : NSObject
 /**
  *  发送一个网络请求
@@ -16,7 +16,11 @@
  *  @param success    网路请求成功后的回调
  *  @param failure    网络请求失败后的回调
  */
-+ (void)getStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure;
++ (void)getNewStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure;
 
-- (void)getStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure;
+- (void)getNewStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure;
+
++ (void)getOldStatusesFromNetwork:(GStatusesSid *)param success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure;
+
+- (void)getOldStatusesFromNetwork:(GStatusesSid *)param success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure;
 @end

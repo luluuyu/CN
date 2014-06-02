@@ -25,4 +25,7 @@
 + (void)addStatuses:(NSArray *)statusArray;
 
 + (NSArray *)statuesWithParam:(GStatusesSid *)param;
+
+// sid 是否在数据库中已经存在
++ (BOOL)isStatusAlreadyIn:(int)sid;
 @end

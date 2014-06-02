@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 cubeTC. All rights reserved.
 //
 
-#import "GMasterParse.h"
+#import "GHomeParse.h"
 #import "TFHpple.h"
 
-@implementation GMasterParse
+@implementation GHomeParse
 
 
 

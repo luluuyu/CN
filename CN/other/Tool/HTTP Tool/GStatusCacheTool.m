@@ -78,11 +78,7 @@ static FMDatabaseQueue *_queue;
         
         FMResultSet *rs = nil;
         
-        
-        NSString *sid_miniStr = [NSString stringWithFormat:@"%d",param.sid_end];
-        rs = [db executeQuery:@"select * from t_status where sid > ?;" , sid_miniStr];
-        
-        
+        rs = [db executeQuery:@"select * from t_status where sid <= ? and sid => ?;" , param.sid_since , param.sid_end];
         
         while (rs.next) {
             NSData *data = [rs dataForColumn:@"dict"];
@@ -95,7 +91,41 @@ static FMDatabaseQueue *_queue;
     return dictArray;
 }
 
+/**
+ *  isStatusAlreadyIn
+ *
+ *  @param sid 
+ *
+ *  @return  BOOL
+ */
++ (BOOL)isStatusAlreadyIn:(int)sid
+{
+    
+    // 1.定义数组
+    __block NSMutableArray *dictArray = nil;
+    
+    // 2.使用数据库
+    [_queue inDatabase:^(FMDatabase *db) {
+        // 创建数组
+        dictArray = [NSMutableArray array];
+        
+        FMResultSet *rs = nil;
 
+        rs = [db executeQuery:@"select * from t_status where sid = ? ;" ,[NSString stringWithFormat:@"%d",sid]];
+        
+        while (rs.next) {
+            NSData *data = [rs dataForColumn:@"dict"];
+            NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [dictArray addObject:dict];
+        }
+    }];
+    
+    if (dictArray.count == 1) {
+        return YES;
+    }else {
+        return NO;
+    }
+}
 //+ (void)initialize
 //{
 //    // 0.获得沙盒中的数据库文件名

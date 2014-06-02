@@ -8,15 +8,17 @@
 #define GTextFont [UIFont systemFontOfSize:16]
 
 #import "GDetailViewController.h"
-#import "GDetail.h"
+#import "GDetailModel.h"
 #import "NSString+Extension.h"
+#import "MBProgressHUD+MJ.h"
 
 @interface GDetailViewController () <UIScrollViewDelegate>
 
 
-@property (nonatomic,weak)UIImageView *image;
-@property (nonatomic,weak)GDetailView *view;
-@property (nonatomic,assign)CGSize contSize;
+@property (nonatomic,weak   )UIImageView       *image;
+@property (nonatomic,weak   )GDetailView       *view;
+@property (nonatomic,assign )CGSize             contSize;
+
 
 @end
 
@@ -28,36 +30,40 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.title = self.GDM.title_show;
     
+    // 设置显示的内容
+    [self.GDM setupContentWithURL:self.GDM.url_show success:^(NSString *str) {
+        if (str) {
+            
+            self.GDM.detailContent = str;
+
+            [self setupContent:str];
+            // 回到主线程 更新 UI
+            NSBlockOperation *opSuccess = [NSBlockOperation blockOperationWithBlock:^{
+                
+        }];
+            
+            [[NSOperationQueue mainQueue] addOperation:opSuccess];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+
 }
 
-
-- (void)setup
+- (void)setupContent:(NSString *)detailContent
 {
-    
-    GDetail *GD = [[GDetail alloc]init];
-    
-    //解析标题和正文,图片
-    NSURL *url = [NSURL URLWithString:@"http://www.cnbeta.com" ];
-    NSString *str = [[NSString alloc]initWithContentsOfURL: url  encoding:NSUTF8StringEncoding error:nil];
-    
-    NSString *titleStr = [GD parseTitle:str];
-    NSString *contStr  = [GD parseDetailCont:str];
-//    NSArray *imgeURL = [GD parseImageURL:self.dataItem.link];
-    
-
     
     //计算文字的高度
     
     if (IOS7_OR_LATER) {
         CGSize textMaxSize = CGSizeMake(290, MAXFLOAT);
-        self.contSize = [contStr size1WithFont:GTextFont maxSize:textMaxSize];
+        self.contSize = [detailContent size1WithFont:GTextFont maxSize:textMaxSize];
     }else{
         CGSize textMaxSize = CGSizeMake(290, MAXFLOAT);
-        self.contSize = [contStr sizeWithFont:GTextFont constrainedToSize:textMaxSize lineBreakMode:0];
+        self.contSize = [detailContent sizeWithFont:GTextFont constrainedToSize:textMaxSize lineBreakMode:0];
     }
-    
-    
     
     
     UILabel *titleLabel = [[UILabel alloc]init];
@@ -73,11 +79,11 @@
     
     
     contLable.font = [contLable.font fontWithSize:16];
-    contLable.text = contStr;
+    contLable.text = detailContent;
     contLable.lineBreakMode = NSLineBreakByCharWrapping;
     contLable.numberOfLines = 0;
     
-    titleLabel.text = titleStr;
+    titleLabel.text = self.GDM.title_show;
     titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
     titleLabel.numberOfLines = 0;
     
@@ -120,14 +126,6 @@
     self.view = view;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:YES];
-
-    [self setup];
-    
-    
-}
 
 
 

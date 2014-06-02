@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataItem.h"
+
 #import "GDetailView.h"
+@class GDetailModel;
 @interface GDetailViewController : UIViewController
 
-
-
+@property (nonatomic,strong )GDetailModel      *GDM;
 
 @end

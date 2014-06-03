@@ -190,7 +190,7 @@
 //            self.array  = (NSMutableArray *)[GStatus objectArrayWithKeyValuesArray:sa];
             
             NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
-                [MBProgressHUD showError:@"Need To Connect"];
+                [MBProgressHUD showError:@"请连接互联网                           "];
                 [self.tableView reloadData];
                 [self.footer endRefreshing];
             }];
@@ -227,7 +227,7 @@
         self.array = [self loadDataFromSQLWithLimit:limitNO];
         
         NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
-            [MBProgressHUD showError:@"Need To Connect"];
+            [MBProgressHUD showError:@"请连接互联网                            "];
             [self.tableView reloadData];
             [self.header endRefreshing];
         }];

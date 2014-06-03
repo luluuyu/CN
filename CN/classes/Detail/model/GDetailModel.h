@@ -14,15 +14,14 @@
 @property (nonatomic,copy  )NSString        *title_show;                   //新闻标题
 @property (nonatomic,copy  )NSString        *hometext_show_short;          //新闻子标题
 @property (nonatomic,copy  )NSString        *detailContent;
-@property (nonatomic,copy  )NSString        *URLArray;
-@property (nonatomic,copy  )NSMutableArray  *imageArray;
+@property (nonatomic,copy  )NSArray         *imageURLArray;
 
 
 
 
 
-//解析图片
--(NSMutableArray *)parseImageURL:(NSString *)HTMLString;
+
+
 //解析所有内容
 -(NSString *)parseDetailCont:(NSString *)HTMLString;
 

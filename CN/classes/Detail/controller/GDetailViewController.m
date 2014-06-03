@@ -38,9 +38,9 @@
             
             self.GDM.detailContent = str;
 
-            [self setupContent:str];
             // 回到主线程 更新 UI
             NSBlockOperation *opSuccess = [NSBlockOperation blockOperationWithBlock:^{
+                
                 
         }];
             
@@ -52,17 +52,22 @@
 
 }
 
-- (void)setupContent:(NSString *)detailContent
+/**
+ *  计算文字的高度
+ *
+ *  @param string 要计算的文字
+ *
+ *  @return 字体的大小
+ */
+- (CGSize)caculateContentSize:(NSString *)string
 {
-    
-    //计算文字的高度
-    
+    CGSize contSize;
     if (IOS7_OR_LATER) {
         CGSize textMaxSize = CGSizeMake(290, MAXFLOAT);
-        self.contSize = [detailContent size1WithFont:GTextFont maxSize:textMaxSize];
+         contSize = [string size1WithFont:GTextFont maxSize:textMaxSize];
     }else{
         CGSize textMaxSize = CGSizeMake(290, MAXFLOAT);
-        self.contSize = [detailContent sizeWithFont:GTextFont constrainedToSize:textMaxSize lineBreakMode:0];
+        contSize = [string sizeWithFont:GTextFont constrainedToSize:textMaxSize lineBreakMode:0];
     }
     
     
@@ -75,47 +80,49 @@
     
     
     UILabel *contLable  = [[UILabel alloc]initWithFrame:CGRectMake(20, 60, self.contSize.width, self.contSize.height)];
-   
+    return contSize;
+}
+- (void)setupView{
     
     
-    contLable.font = [contLable.font fontWithSize:16];
-    contLable.text = detailContent;
-    contLable.lineBreakMode = NSLineBreakByCharWrapping;
-    contLable.numberOfLines = 0;
+
+//    contLable.font = [contLable.font fontWithSize:16];
+//    contLable.text = detailContent;
+//    contLable.lineBreakMode = NSLineBreakByCharWrapping;
+//    contLable.numberOfLines = 0;
+//    
+//    titleLabel.text = self.GDM.title_show;
+//    titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
+//    titleLabel.numberOfLines = 0;
+//    
+//    
+//    //self.navigationController.navigationBarHidden = YES;
+//    
+//    
+//    
+//    
+//    
+//    CGSize mainSize =   [UIScreen mainScreen].bounds.size;
+//    // 相对父控件显示大小
+//    
+//    UIScrollView *scrollView = [[UIScrollView alloc]init];
+//    if (IOS7_OR_LATER) {
+//        scrollView.frame = CGRectMake(0, 60,mainSize.width , mainSize.height-30);
+//    }else{
+//        scrollView.frame = CGRectMake(0, 0,mainSize.width , mainSize.height-30);
+//                                      }
+//    //scrollView 的显示范围
+//    scrollView.contentSize = CGSizeMake( contLable.frame.size.width, self.contSize.height + 90);
+//    
+//    
+//    
+//    
+//    [scrollView addSubview:titleLabel];
+//    [scrollView addSubview:contLable];
+//       
+//    [self.view addSubview:scrollView];
+//        
     
-    titleLabel.text = self.GDM.title_show;
-    titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    titleLabel.numberOfLines = 0;
-    
-    
-    //self.navigationController.navigationBarHidden = YES;
-    
-    
-    
-    
-    
-    CGSize mainSize =   [UIScreen mainScreen].bounds.size;
-    // 相对父控件显示大小
-    
-    UIScrollView *scrollView = [[UIScrollView alloc]init];
-    if (IOS7_OR_LATER) {
-        scrollView.frame = CGRectMake(0, 60,mainSize.width , mainSize.height-30);
-    }else{
-        scrollView.frame = CGRectMake(0, 0,mainSize.width , mainSize.height-30);
-                                      }
-    //scrollView 的显示范围
-    scrollView.contentSize = CGSizeMake( contLable.frame.size.width, self.contSize.height + 90);
-    
-    
-    
-    
-    [scrollView addSubview:titleLabel];
-    [scrollView addSubview:contLable];
-       
-    [self.view addSubview:scrollView];
-        
-    
-   
 }
 
 

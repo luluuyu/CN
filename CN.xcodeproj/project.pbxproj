@@ -375,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				277906DE191D18FA0081C136 /* Home */,
+				27A5E757193B4115009A1373 /* Detail */,
 			);
 			path = classes;
 			sourceTree = "<group>";
@@ -603,7 +604,6 @@
 			isa = PBXGroup;
 			children = (
 				27790661191D121C0081C136 /* classes */,
-				27A5E757193B4115009A1373 /* Detail */,
 				2779067B191D121C0081C136 /* other */,
 				276DB186191D0A32003E5BE4 /* setting */,
 			);
@@ -646,8 +646,7 @@
 				27A5E75B193B4115009A1373 /* model */,
 				27A5E764193B4115009A1373 /* view */,
 			);
-			name = Detail;
-			path = classes/Detail;
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		27A5E758193B4115009A1373 /* controller */ = {

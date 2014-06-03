@@ -22,7 +22,7 @@
                         <rect key="frame" x="8" y="11" width="302" height="45"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                         <color key="textColor" red="0.015686274509803921" green="0.15686274509803921" blue="0.58676437043795615" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HIh-ec-FvK">
@@ -53,6 +53,7 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.9762228261" green="0.9762228261" blue="0.9762228261" alpha="1" colorSpace="calibratedRGB"/>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="bottomLabel" destination="HIh-ec-FvK" id="DvH-Pv-l7V"/>
                 <outlet property="cell" destination="H2p-sc-9uM" id="aUI-KR-p1Z"/>

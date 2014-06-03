@@ -24,6 +24,8 @@
 #import "UIImageView+WebCache.h"
 #import "GDetailModel.h"
 
+#define limitNO @"60"
+
 
 
 @interface GViewController ()<MJRefreshBaseViewDelegate>
@@ -52,8 +54,18 @@
 
 	self.tableView.rowHeight = 230;
     
+//    // 初始化数据
+//    [self initData];
     
-    
+    // 执行刷新操作
+    [self setupRefreshView];
+}
+
+/**
+ *  初始化软件的数据
+ */
+- (void)initData
+{
     // 取出最大sid
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *sidMax = [defaults stringForKey:@"maxSid"];
@@ -64,11 +76,9 @@
         p.sid_max   = sidMax;
         p.sid_since = sidMax;
         p.sid_end   = [NSString stringWithFormat:@"%d",([p.sid_since intValue] - 120)];
-        self.array = [self loadDataFromSQL:p];
+        
+        self.array = [self loadDataFromSQLWithLimit:limitNO];
     }
-
-    // 执行刷新操作
-    [self setupRefreshView];
 }
 
 - (void)setupRefreshView
@@ -81,8 +91,6 @@
     [header beginRefreshing];
     self.header = header;
     
-    
-    
     // 2.上拉刷新(上拉加载更多数据)
     MJRefreshFooterView *footer = [MJRefreshFooterView footer];
     footer.scrollView = self.tableView;
@@ -91,9 +99,7 @@
 //    footer.beginRefreshingBlock = ^(MJRefreshBaseView *refreshView){
 //        IWLog(@"refreshing.....");
 //    };
-    
-    
-    
+ 
 }
 
 - (void)dealloc
@@ -101,6 +107,7 @@
     // 释放内存
     [self.header free];
     [self.footer free];
+    
 }
 
 
@@ -119,12 +126,16 @@
 
 
 
-// 从数据库加载数据
+// 从数据库加载数据 从param. sid_since 到 sid_end
 - (NSArray *)loadDataFromSQL:(GStatusesSid *)param
 {
-    
-    return  [GStatus objectArrayWithKeyValuesArray:[GStatusCacheTool statuesWithParam:param]];
-    
+    return  [GStatus objectArrayWithKeyValuesArray:[GStatusCacheTool readStatuesWithParam:param]];
+}
+
+// 从数据库加载 xxx 条数据
+- (NSArray *)loadDataFromSQLWithLimit:(NSString *)limit
+{
+    return  [GStatus objectArrayWithKeyValuesArray:[GStatusCacheTool readStatuesWithLimit:limit]];
 }
 
 
@@ -156,18 +167,8 @@
         
         param.page = self.page;
         [GHTTPTool getOldStatusesFromNetwork:param success:^(NSArray *newData) {
-            
-            // 请求成功回调回来 返回最新的数据
-            // 将最新的数据追加到旧数据的最前面
-            // 旧数据: self.statusFrames
-            // 新数据: statusFrameArray
-            NSMutableArray *tempArray = [NSMutableArray array];
-            // 添加statusFrameArray的所有元素 添加到 tempArray中
-            [tempArray addObjectsFromArray:newData];
-            // 添加self.statusFrames的所有元素 添加到 tempArray中
-            [tempArray addObjectsFromArray:self.array];
-            self.array = tempArray;
- 
+
+            [self addToArrayFrom:newData];
             
             // 回到主线程刷新表格
             NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
@@ -189,7 +190,8 @@
 //            self.array  = (NSMutableArray *)[GStatus objectArrayWithKeyValuesArray:sa];
             
             NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
-                [MBProgressHUD showError:@"亲,失败了啊!!"];
+                [MBProgressHUD showError:@"Need To Connect"];
+                [self.tableView reloadData];
                 [self.footer endRefreshing];
             }];
             // 回到主线程更新 UI
@@ -209,11 +211,10 @@
 
     [GHTTPTool getNewStatusesFromNetwork:[sidMax intValue] success:^(NSArray *newData) {
         
-        // 请求成功回调回来 返回最新的数据
-        self.array = newData;
-        
         // 回到主线程刷新表格
         NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
+            // 请求成功回调回来 返回最新的数据
+              self.array = newData;
              [self.tableView reloadData];
              [self.header endRefreshing];
         }];
@@ -223,15 +224,11 @@
     } failure:^(NSError *error) {
         
         // 网络请求失败, 返回数据库中存储的最前面的60条数据
-        GStatusesSid *param = [[GStatusesSid alloc]init];
-        param.sid_max   = sidMax;
-        param.sid_since = sidMax;
-        param.sid_end   = [NSString stringWithFormat:@"%d",([param.sid_since intValue]- 120)];
-        
-        self.array = [self loadDataFromSQL:param];
+        self.array = [self loadDataFromSQLWithLimit:limitNO];
         
         NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
-            [MBProgressHUD showError:@"亲,没网啊!!"];
+            [MBProgressHUD showError:@"Need To Connect"];
+            [self.tableView reloadData];
             [self.header endRefreshing];
         }];
         // 回到主线程更新 UI
@@ -300,8 +297,20 @@
 
 
 
-
-
+- (void)addToArrayFrom:(NSArray *)array
+{
+    
+    // 请求成功回调回来 返回最新的数据
+    // 将最新的数据追加到旧数据的最前面
+    // 旧数据: self.statusFrames
+    // 新数据: statusFrameArray
+    NSMutableArray *tempArray = [NSMutableArray array];
+    // 添加statusFrameArray的所有元素 添加到 tempArray中
+    [tempArray addObjectsFromArray:array];
+    // 添加self.statusFrames的所有元素 添加到 tempArray中
+    [tempArray addObjectsFromArray:self.array];
+    self.array = tempArray;
+}
 
 @end
 

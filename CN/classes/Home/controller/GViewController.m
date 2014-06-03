@@ -151,8 +151,6 @@
     param.sid_since = [NSString stringWithFormat:@"%d",([current_mini_sid intValue] - 2)];
     param.sid_end   = [NSString stringWithFormat:@"%d",([param.sid_since intValue]- 120)];
     
-    NSLog(@"%d --- %d",[param.sid_end intValue] ,[mini_sid intValue] );
-    
 //    if ([param.sid_end intValue] > [mini_sid intValue]) {
 //        // 如果数据库中有这个数据, 直接加载就行了
 //        [self loadDataFromSQL:param];
@@ -189,7 +187,7 @@
 //            self.array  = (NSMutableArray *)[GStatus objectArrayWithKeyValuesArray:sa];
             
             NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
-                [MBProgressHUD showError:@"请连接互联网                           "];
+                [MBProgressHUD showError:@"        请连接互联网        "];
                 [self.tableView reloadData];
                 [self.footer endRefreshing];
             }];
@@ -226,7 +224,7 @@
         self.array = [self loadDataFromSQLWithLimit:limitNO];
         
         NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
-            [MBProgressHUD showError:@"请连接互联网                            "];
+            [MBProgressHUD showError:@"        请连接互联网        "];
             [self.tableView reloadData];
             [self.header endRefreshing];
         }];

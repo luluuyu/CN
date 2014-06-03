@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GDetailView : UIView
+@interface GDetailView : UIScrollView
 
+@property (nonatomic, copy)NSArray *arr;
+@property (nonatomic, assign)CGRect contSize;
 @end

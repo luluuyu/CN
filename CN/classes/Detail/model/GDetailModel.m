@@ -10,13 +10,15 @@
 #import "TFHpple.h"
 #import "AFNetworking.h"
 
+@interface GDetailModel ()
+@property (nonatomic, strong) GDetailModel *GDM;
+
+@end
+
 @implementation GDetailModel
 
 
-
-
-
-- (void)setupContentWithURL:(NSString *)URL success:(void (^)(NSString *str))success
+- (void)setupContentWithURL:(NSString *)URL success:(void (^)(NSArray *arr))success
                     failure:(void (^)(NSError *error))failure
 {
     // 用 AFN 获取网页内容
@@ -26,15 +28,14 @@
  success:^(AFHTTPRequestOperation *operation, id responseObject) {
      
      NSString *HTMLString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-     // 解析正文
-     self.detailContent  = [self parseDetailCont:HTMLString];
-     
+     // 解析正文 & 图像地址
+      [self parseDetailCont:HTMLString];
      
      // 成功后回调
      success (self.detailContent);
      
  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-     
+     failure(error);
  }];
 
     
@@ -43,7 +44,7 @@
 
 
 #pragma cont 解析正文 & 图片
-- (NSString *)parseDetailCont:(NSString *)HTMLString{
+- (NSArray *)parseDetailCont:(NSString *)HTMLString{
     
 
     // 网页内容开始地方
@@ -72,6 +73,7 @@
         
         NSData *htmlData=[arr[i] dataUsingEncoding:/*CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)*/NSUTF8StringEncoding];
         
+        // 开始解析
         TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
         NSArray *elementsCont  = [xpathParser searchWithXPathQuery:@"//p"];
         NSArray *elementsImage = [xpathParser searchWithXPathQuery:@"//img"];
@@ -87,6 +89,7 @@
             NSDictionary *dict     = @{key: imageURL};
             [contArr addObject:dict];
             }
+            
         }
         
         
@@ -99,12 +102,12 @@
                 NSDictionary *dict = @{key: str};
                 [contArr addObject:dict];
              }
+            
         }
 
-        
     }
     
-    return DetailContentString;
+    return self.detailContent = contArr;
 }
 
 

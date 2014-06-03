@@ -253,7 +253,6 @@
             GStatus *statusMini = statusArray[arr.count - 1];
             
             NSString *miniSid = [defaults objectForKey:@"miniSid"];
-            NSLog(@"%@ -- %@",statusMini.sid,miniSid);
             
             if(miniSid == nil){
                 // 第一次写入

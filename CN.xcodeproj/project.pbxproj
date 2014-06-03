@@ -83,7 +83,6 @@
 		279CA7EB191D08CE009C6DA0 /* CNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 279CA7EA191D08CE009C6DA0 /* CNTests.m */; };
 		27A5E767193B4115009A1373 /* GDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5E75A193B4115009A1373 /* GDetailViewController.m */; };
 		27A5E769193B4115009A1373 /* GDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5E75F193B4115009A1373 /* GDetailModel.m */; };
-		27A5E76A193B4115009A1373 /* GHomeParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5E761193B4115009A1373 /* GHomeParse.m */; };
 		27A5E76C193B4115009A1373 /* GDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5E766193B4115009A1373 /* GDetailView.m */; };
 		27C1AE19191DB0AC00C5E9B1 /* placeHolderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27C1AE18191DB0AC00C5E9B1 /* placeHolderImage.jpg */; };
 		27C1AE1C191DB23500C5E9B1 /* UIImage+UIImage_G.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C1AE1B191DB23500C5E9B1 /* UIImage+UIImage_G.m */; };
@@ -244,8 +243,6 @@
 		27A5E75A193B4115009A1373 /* GDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDetailViewController.m; sourceTree = "<group>"; };
 		27A5E75E193B4115009A1373 /* GDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDetailModel.h; sourceTree = "<group>"; };
 		27A5E75F193B4115009A1373 /* GDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDetailModel.m; sourceTree = "<group>"; };
-		27A5E760193B4115009A1373 /* GHomeParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHomeParse.h; sourceTree = "<group>"; };
-		27A5E761193B4115009A1373 /* GHomeParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHomeParse.m; sourceTree = "<group>"; };
 		27A5E765193B4115009A1373 /* GDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDetailView.h; sourceTree = "<group>"; };
 		27A5E766193B4115009A1373 /* GDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDetailView.m; sourceTree = "<group>"; };
 		27C1AE18191DB0AC00C5E9B1 /* placeHolderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeHolderImage.jpg; sourceTree = "<group>"; };
@@ -665,8 +662,6 @@
 				27A5E75F193B4115009A1373 /* GDetailModel.m */,
 				27EF7208193B44DB00067F74 /* GParseImage.h */,
 				27EF7209193B44DB00067F74 /* GParseImage.m */,
-				27A5E760193B4115009A1373 /* GHomeParse.h */,
-				27A5E761193B4115009A1373 /* GHomeParse.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -805,7 +800,6 @@
 				276CB132193AC2BD00B4FE58 /* AFNetworkReachabilityManager.m in Sources */,
 				2768A38D191D38DF005C4C24 /* UIImage+MultiFormat.m in Sources */,
 				27280F1C193AEE5400677A41 /* GSView.m in Sources */,
-				27A5E76A193B4115009A1373 /* GHomeParse.m in Sources */,
 				277906AE191D121C0081C136 /* XPathQuery.m in Sources */,
 				277906AC191D121C0081C136 /* TFHppleElement.m in Sources */,
 				277906AD191D121C0081C136 /* WebServices.m in Sources */,

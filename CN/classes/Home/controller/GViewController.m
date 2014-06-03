@@ -9,9 +9,7 @@
 #import "GViewController.h"
 #import "GTableViewCell.h"
 #import "GAppDelegate.h"
-#import "GDetailViewController.h"
 #import "GTableViewCell.h"
-#import "GHomeParse.h"
 #import "GHTTPTool.h"
 #import "GStatusesSid.h"
 #import "GStatusCacheTool.h"
@@ -23,6 +21,7 @@
 #import "SDWebImageManager.h"
 #import "UIImageView+WebCache.h"
 #import "GDetailModel.h"
+#import "GDetailViewController.h"
 
 #define limitNO @"60"
 
@@ -39,7 +38,7 @@
 @property (nonatomic, weak  ) MJRefreshHeaderView   *header;
 @property (nonatomic, assign) int                    page;                    //第几页
 @property (nonatomic, weak  ) UIRefreshControl      *refreshControl;
-@property (nonatomic, strong) GDetailViewController *GDVC;
+
 @property (nonatomic, readonly, getter=isRefreshing) BOOL refreshing;
 
 @end
@@ -214,7 +213,7 @@
         // 回到主线程刷新表格
         NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
             // 请求成功回调回来 返回最新的数据
-              self.array = newData;
+             self.array = newData;
              [self.tableView reloadData];
              [self.header endRefreshing];
         }];
@@ -261,7 +260,7 @@
     GTableViewCell *cell = [GTableViewCell cellWithTableView:tableView];
     
     if (self.array.count != 0) {
-        NSLog(@"%d",indexPath.row);
+        
         GStatus *s = self.array[indexPath.row];
         cell.contLable.text  = s.hometext_show_short;
         cell.titleLable.text = s.title_show;
@@ -283,16 +282,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (!self.GDVC)
-		self.GDVC = [[GDetailViewController alloc] init];
+	
+    GDetailViewController *GDVC = [[GDetailViewController alloc] init];
     
     GStatus *s = self.array[indexPath.row];
     
 	GDetailModel *GDM = [[GDetailModel alloc]init];
     GDM.url_show = s.url_show;
     GDM.title_show = s.title_show;
-	self.GDVC.GDM = GDM;
-	[self.navigationController pushViewController:self.GDVC animated:YES];
+	GDVC.GDM = GDM;
+	[self.navigationController pushViewController:GDVC animated:YES];
 }
 
 
@@ -306,9 +305,9 @@
     // 新数据: statusFrameArray
     NSMutableArray *tempArray = [NSMutableArray array];
     // 添加statusFrameArray的所有元素 添加到 tempArray中
-    [tempArray addObjectsFromArray:array];
-    // 添加self.statusFrames的所有元素 添加到 tempArray中
     [tempArray addObjectsFromArray:self.array];
+    // 添加self.statusFrames的所有元素 添加到 tempArray中
+    [tempArray addObjectsFromArray:array];
     self.array = tempArray;
 }
 

@@ -5,8 +5,19 @@
 //  Created by AlfieL on 14-4-28.
 //  Copyright (c) 2014年 cubeTC. All rights reserved.
 //
-#define GTextFont [UIFont systemFontOfSize:16]
-#define kMargin    30
+#define GLabelTextSize          [UIFont systemFontOfSize:16]
+#define GLabelFontSize           16
+#define GLabelMaxWidth           300        // label 最大的宽度
+#define GImageMaxWidth           260        // imageView 最大的宽度
+#define GImageMaxHight           200        // imageView 最大的 高度
+#define GTitle_showHight         60
+#define kLabelWithLabelMargin    30         // label 与 label 之间的间距
+#define miniLabelTextLimited     5          // label 显示的最小文字限制
+#define GLabelLeftSection        20         // label 的左边距
+#define GLabelTopsection         60         // 首个 subView 上部预留边距
+
+
+
 #import "GDetailView.h"
 #import "NSString+Extension.h"
 #import "UIImageView+WebCache.h"
@@ -23,23 +34,24 @@
 // 重写 arr 的 set 方法, 设置 View
 - (void)setArr:(NSArray *)arr
 {
-    _arr = arr;
+     _arr = arr;
     
-    
-    
-    
+    // 处理 arr (设置 view 的显示)
     [self processArr:arr];
+    
 }
 
-// 处理 arr
+// 处理 arr (设置 view 的显示)
 - (void)processArr:(NSArray *)arr
 {
+    [self setTitleAndSubtitle];
+    
     for (NSDictionary *dict in arr) {
         
         NSString *contentString = [dict objectForKey:@"content"];
         NSString *imageURL      = [dict objectForKey:@"imageURL"];
-    
-        if (contentString.length > 1) {
+        
+        if (contentString.length > miniLabelTextLimited) {
             [self addLabelWithString:contentString];
         }else if (imageURL){
             [self addImageViewWithURL:imageURL];
@@ -54,15 +66,15 @@
  *
  *  @return 字体的大小
  */
-- (CGSize)caculateContentSize:(NSString *)string
+- (CGSize)sizeOfString:(NSString *)string
 {
     CGSize contSize;
     if (IOS7_OR_LATER) {
-        CGSize textMaxSize = CGSizeMake(290, MAXFLOAT);
-        contSize = [string size1WithFont:GTextFont maxSize:textMaxSize];
+        CGSize textMaxSize = CGSizeMake(GLabelMaxWidth, MAXFLOAT);
+        contSize = [string sizeWithFont:GLabelTextSize maxSize:textMaxSize];
     }else{
-        CGSize textMaxSize = CGSizeMake(290, MAXFLOAT);
-        contSize = [string sizeWithFont:GTextFont constrainedToSize:textMaxSize lineBreakMode:0];
+        CGSize textMaxSize = CGSizeMake(GLabelMaxWidth, MAXFLOAT);
+        contSize = [string sizeWithFont:GLabelTextSize constrainedToSize:textMaxSize lineBreakMode:0];
     }
     return contSize;
 }
@@ -72,127 +84,161 @@
 - (void)addLabelWithString:(NSString *)contentString
 {
     // 先计算size
-    CGSize contentSize = [self caculateContentSize:contentString];
-    
-    if ( self.contSize.size.width < 10) {
-        // title 下面的第一个内容
-        // 创建label
-        UILabel *contLabel  = [[UILabel alloc]initWithFrame:CGRectMake(20, 60, contentSize.width, contentSize.height)];
-        contLabel.font = [contLabel.font fontWithSize:16];
-//        contLabel.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:16];
+    CGSize contentSize = [self sizeOfString:contentString];
+//    
+//    if ( !self.contSize.size.width ) {
+//        
+//        // title 下面的第一个内容
+//        // 创建label & 设置 label 的显示
+//        UILabel *contLabel  = [[UILabel alloc]initWithFrame:
+//                               CGRectMake(GLabelLeftSection  ,
+//                                          GLabelTopsection   ,
+//                                          contentSize.width  ,
+//                                          contentSize.height )];
+//        
+//        contLabel.font = [contLabel.font fontWithSize:GLabelFontSize];  //设置 label 的字体
+//        contLabel.text = [NSString stringWithFormat:@"    %@",contentString];
+//        contLabel.lineBreakMode = NSLineBreakByCharWrapping;
+//        contLabel.numberOfLines = 0;
+//        self.contSize = CGRectMake( GLabelLeftSection ,
+//                                    GLabelTopsection + contentSize.height + kLabelWithLabelMargin,
+//                                    GLabelMaxWidth ,
+//                                    contentSize.width + contentSize.height + kLabelWithLabelMargin );
+//        
+//        [self addSubview:contLabel];
+//    }else {
+//        
+//        // 非第一个内容
+        UILabel *contLabel  = [[UILabel alloc]
+                               initWithFrame:CGRectMake(GLabelLeftSection, self.contSize.origin.y, contentSize.width, contentSize.height)];
+        
+        contLabel.font = [contLabel.font fontWithSize:GLabelFontSize];
         contLabel.text = [NSString stringWithFormat:@"    %@",contentString];
         contLabel.lineBreakMode = NSLineBreakByCharWrapping;
         contLabel.numberOfLines = 0;
-        [self addSubview:contLabel];
-        self.contSize = CGRectMake( 0 , 60 + contentSize.height + kMargin, 300, contentSize.width + contentSize.height + kMargin );
-        
-        
-    }else {
-        
-        // 非第一个内容
-        UILabel *contLabel  = [[UILabel alloc]initWithFrame:CGRectMake(20, self.contSize.origin.y, contentSize.width, contentSize.height)];
-        contLabel.font = [contLabel.font fontWithSize:16];
-        contLabel.text = [NSString stringWithFormat:@"    %@",contentString];
-        contLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        contLabel.numberOfLines = 0;
-        self.contSize = CGRectMake( 0 , self.contSize.origin.y + contentSize.height + kMargin, 300, self.contSize.origin.y + contentSize.height + kMargin);
+        self.contSize = CGRectMake( GLabelLeftSection ,
+                                    self.contSize.origin.y + contentSize.height + kLabelWithLabelMargin,
+                                    GLabelMaxWidth ,
+                                    self.contSize.origin.y + contentSize.height + kLabelWithLabelMargin);
+        // 最后返回最新的 self.contSize 供其他 subview 使用
         [self insertSubview:contLabel atIndex:self.subviews.count];
 
-    }
+//    }
     
 }
 
 - (void)addImageViewWithURL:(NSString *)string
 {
     
+//    if ( !self.contSize.size.width ) {
+//        self.contSize = CGRectMake( GLabelLeftSection ,
+//                                    GLabelTopsection + GImageMaxHight + kLabelWithLabelMargin,
+//                                    GLabelMaxWidth ,
+//                                    GImageMaxHight + kLabelWithLabelMargin);
+//        
+//        // title 下面的第一个内容
+//        // 创建label
+//        UIImageView *imageView  = [[UIImageView alloc]
+//                                   initWithFrame: CGRectMake( GLabelLeftSection,
+//                                                              GLabelTopsection ,
+//                                                              GImageMaxWidth   ,
+//                                                              GImageMaxHight )];
+//        
+//        imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        
+//        [imageView setImageWithURL:[NSURL URLWithString:string] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+//            
+//            NSLog(@"c") ;
+//        }];
+//        [self addSubview:imageView];
+//        
+//        
+//    }else {
     
-    
-    if ( self.contSize.size.width < 10) {
-        self.contSize = CGRectMake( 0 , 60 + 200 + kMargin, 300, 200 + kMargin);
-        // title 下面的第一个内容
-        // 创建label
-        UIImageView *imageView  = [[UIImageView alloc]initWithFrame:CGRectMake(30, 60 , 260, 200)];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        
-        [imageView setImageWithURL:[NSURL URLWithString:string] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-            
-            NSLog(@"c") ;
-        }];
-        [self addSubview:imageView];
-        
-        
-    }else {
-        
-        UIImageView *imageView  = [[UIImageView alloc]initWithFrame:CGRectMake(30, self.contSize.origin.y , 260, 200)];
+        UIImageView *imageView  = [[UIImageView alloc]
+                                   initWithFrame:CGRectMake( GLabelLeftSection      ,
+                                                             self.contSize.origin.y ,
+                                                             GImageMaxWidth         ,
+                                                             GImageMaxHight )];
         
         imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [imageView setImageWithURL:[NSURL URLWithString:string] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        [imageView setImageWithURL:[NSURL URLWithString:string]
+                   placeholderImage:nil
+                         completed:^( UIImage *image, NSError *error, SDImageCacheType cacheType) {
             
             
         }];
         [self insertSubview:imageView atIndex:self.subviews.count];
-        self.contSize = CGRectMake( 0 , self.contSize.size.height + 200 + kMargin, 300, self.contSize.size.height + 200 + kMargin);
-    }
+    
+    // 最后返回最新的 self.contSize 供其他 subview 使用
+        self.contSize = CGRectMake( GLabelLeftSection ,
+                                    self.contSize.size.height + GImageMaxHight + kLabelWithLabelMargin,
+                                    GImageMaxWidth ,
+                                    self.contSize.size.height + GImageMaxHight + kLabelWithLabelMargin );
+//    }
 }
 
 
 
 
-- (void)setTitleLabelWithTitle:(NSString *)title
+- (void)setTitleAndSubtitle
 {
-    //    UILabel *titleLabel = [[UILabel alloc]init];
-    //    if (IOS7_OR_LATER) {
-    //        titleLabel.frame = CGRectMake(20,0 , 260, 60);
-    //    }else{
-    //        titleLabel.frame = CGRectMake(20,0 , 260, 60);
-    //    }
     
-    //    titleLabel.text = self.GDM.title_show;
-    //    titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    //    titleLabel.numberOfLines = 0;
+    
+    // 先计算 subTitle 的 size
+    CGSize subTitleSize   = [self sizeOfString:self.hometext_show_short];
+    CGSize title_showSize = [self sizeOfString:self.title_show];
+    
+    // 1)计算 title_show 的位置
+    CGRect title_showRect = CGRectMake( GLabelLeftSection ,
+                                0 ,
+                                GLabelMaxWidth ,
+                                title_showSize.height + kLabelWithLabelMargin);
+    // 2)设置title_show & 添加到 subView
+    UILabel *title_showLabel = [[UILabel alloc]initWithFrame:title_showRect];
+    title_showLabel.text = self.title_show;
+    title_showLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    title_showLabel.numberOfLines = 0;
+    [self addSubview:title_showLabel];
+    
+    
+    // 设置子标题
+    // 1)计算 title_show 的位置
+    CGRect hometext_show_shortRect = CGRectMake( title_showRect.origin.x ,
+                                       title_showRect.origin.y   ,
+                                       title_showRect.size.width ,
+                                       subTitleSize.height + kLabelWithLabelMargin);
+    // 2)设置title_show & 添加到 subView
+    UILabel *hometext_show_shortLabel = [[UILabel alloc]initWithFrame:title_showRect];
+    hometext_show_shortLabel.text = self.title_show;
+    hometext_show_shortLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    hometext_show_shortLabel.numberOfLines = 0;
+    [self addSubview:hometext_show_shortLabel];
+    
+    
+    // 最后返回最新的 self.contSize 供其他 subview 使用
+    self.contSize = CGRectMake( GLabelLeftSection ,
+                                hometext_show_shortRect.origin.y + subTitleSize.height + kLabelWithLabelMargin ,
+                                GLabelMaxWidth ,
+                                hometext_show_shortRect.origin.y + subTitleSize.height + kLabelWithLabelMargin );
+    
+    
+    
+    
+//    if (IOS7_OR_LATER) {
+//        titleLabel.frame = CGRectMake(GLabelLeftSection * 0.8 ,
+//                           0 ,
+//                           [UIScreen mainScreen].bounds.size.width - GLabelLeftSection * 0.8 * 2 ,
+//                           60 );
+//    }else{
+//        titleLabel.frame = CGRectMake(20,0 , 260, 60);
+//    }
+
+    
+    
+    
 }
-- (void)setupView{
-    
-    //    UILabel *contLable  = [[UILabel alloc]initWithFrame:CGRectMake(20, 60, self.contSize.width, self.contSize.height)];
-    
-    //    contLable.font = [contLable.font fontWithSize:16];
-    //    contLable.text = detailContent;
-    //    contLable.lineBreakMode = NSLineBreakByCharWrapping;
-    //    contLable.numberOfLines = 0;
-    //
-    //    titleLabel.text = self.GDM.title_show;
-    //    titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    //    titleLabel.numberOfLines = 0;
-    //
-    //
-    //    //self.navigationController.navigationBarHidden = YES;
-    //
-    //
-    //
-    //
-    //
-    //    CGSize mainSize =   [UIScreen mainScreen].bounds.size;
-    //    // 相对父控件显示大小
-    //
-    //    UIScrollView *scrollView = [[UIScrollView alloc]init];
-    //    if (IOS7_OR_LATER) {
-    //        scrollView.frame = CGRectMake(0, 60,mainSize.width , mainSize.height-30);
-    //    }else{
-    //        scrollView.frame = CGRectMake(0, 0,mainSize.width , mainSize.height-30);
-    //                                      }
-    //    //scrollView 的显示范围
-    //    scrollView.contentSize = CGSizeMake( contLable.frame.size.width, self.contSize.height + 90);
-    //
-    //
-    //
-    //
-    //    [scrollView addSubview:titleLabel];
-    //    [scrollView addSubview:contLable];
-    //       
-    //    [self.view addSubview:scrollView];
-    //        
-    
-}
+
 
 
 @end

@@ -54,7 +54,7 @@
 
 - (void)setupGDetailViewWithData:(NSArray *)arr
 {
-        CGRect screen  =[UIScreen mainScreen].bounds;
+    CGRect screen  =[UIScreen mainScreen].bounds;
     GDetailView  *GDV = [[GDetailView alloc]initWithFrame:CGRectMake(0, 0, 320,screen.size.height-44)];
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -62,7 +62,6 @@
     GDV.contentSize = CGSizeMake(self.view.bounds.size.width, GDV.contSize.size.height);
     [self.view addSubview:GDV];
 
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated

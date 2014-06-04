@@ -15,6 +15,9 @@
  *  @param font    字体
  *  @param maxSize 最大尺寸
  */
-- (CGSize)size1WithFont:(UIFont *)font maxSize:(CGSize)maxSize;
-
+- (CGSize)sizeWithFont:(UIFont *)font maxSize:(CGSize)maxSize;
+/**
+ *  计算给定文字的 size
+ */
+- (CGSize)sizeOfString:(NSString *)string;
 @end

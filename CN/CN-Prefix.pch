@@ -31,12 +31,15 @@
 #ifdef __OBJC__
 
 #define iOS7 ([[UIDevice currentDevice].systemVersion doubleValue] >= 7.0)
-// 2.获得RGB颜色
-#define IWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
-
+/**
+ *  detailView 的背景颜色
+ */
+#define GDC_iOS7_OR_Later  [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1]
+#define GDC_iOS6_OR_Erlier [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1]
+#define GDetailbackGroundColor (IOS7_OR_LATER?GDC_iOS7_OR_Later:GDC_iOS6_OR_Erlier)
 #endif
 #ifdef DEBUG
-#define IWLog(...) NSLog(__VA_ARGS__)
+#define GLog(...) CNLog(__VA_ARGS__)
 #else
 #define IWLog(...)
 #endif

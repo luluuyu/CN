@@ -114,7 +114,7 @@ static FMDatabaseQueue *_queue;
  */
 + (NSArray *)readStatuesWithLimit:(NSString *)limit
 {
-    NSLog(@"%@",limit);
+
     // 1.定义数组
     __block NSMutableArray *dictArray = nil;
     
@@ -131,7 +131,7 @@ static FMDatabaseQueue *_queue;
         while(rs.next)
         {
             int data2 = [rs intForColumnIndex:0];
-            NSLog(@"%d",data2);
+
         }
        
         

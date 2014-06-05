@@ -24,7 +24,7 @@ static FMDatabaseQueue *_queue;
     // 2.创表
     [_queue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"create table if not exists t_statusesDetail (id integer primary key autoincrement, sid integer , sta text , dict blob);"];
-        NSLog(@"%@",[NSBundle mainBundle]);
+
     }];
 }
 
@@ -64,7 +64,7 @@ static FMDatabaseQueue *_queue;
         while (rs.next) {
            NSData *data = [rs dataForColumn:@"dict"];
             dictArr = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-             NSLog(@"%@",dictArr);
+
             [dictArray addObject: dictArr[@"sta"]];
         }
     }];

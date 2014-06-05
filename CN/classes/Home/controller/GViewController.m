@@ -151,10 +151,6 @@
     param.sid_since = [NSString stringWithFormat:@"%d",([current_mini_sid intValue] - 2)];
     param.sid_end   = [NSString stringWithFormat:@"%d",([param.sid_since intValue]- 120)];
     
-//    if ([param.sid_end intValue] > [mini_sid intValue]) {
-//        // 如果数据库中有这个数据, 直接加载就行了
-//        [self loadDataFromSQL:param];
-//    }else {
         // 否则就是数据库中没有这个数据, 需要发送网络请求
         if (self.page == 0) {
             self.page = 2;
@@ -187,7 +183,7 @@
 //            self.array  = (NSMutableArray *)[GStatus objectArrayWithKeyValuesArray:sa];
             
             NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
-                [MBProgressHUD showError:@"        请连接互联网        "];
+                [MBProgressHUD showError:@"请连接互联网"];
                 [self.tableView reloadData];
                 [self.footer endRefreshing];
             }];
@@ -224,7 +220,7 @@
         self.array = [self loadDataFromSQLWithLimit:limitNO];
         
         NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
-            [MBProgressHUD showError:@"        请连接互联网        "];
+            [MBProgressHUD showError:@"请连接互联网"];
             [self.tableView reloadData];
             [self.header endRefreshing];
         }];
@@ -257,7 +253,7 @@
    
     GTableViewCell *cell = [GTableViewCell cellWithTableView:tableView];
     
-    if (self.array.count > 0) {
+    if (self.array.count > 0 || self.array[indexPath.row] != nil) {
         
         GStatus *s = self.array[indexPath.row];
         cell.contLable.text  = s.hometext_show_short;
@@ -268,7 +264,7 @@
         if (url == nil) {
              url = [NSURL URLWithString:[s.logo  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         }
-        [cell.imageV setImageWithURL:url placeholderImage:[UIImage imageWithName:@"placeHolderImage.jpg"]];
+        [cell.imageV setImageWithURL:url placeholderImage:[UIImage imageWithName:@"4"]];
         
         cell.bottomLabel.text = [NSString stringWithFormat:@" %@ 发布于%@  %@次阅读",s.aid, s.time,s.counter];
         
@@ -284,6 +280,9 @@
     if (self.array.count == 0) {
         return;
     }
+    if (self.array[indexPath.row] == nil) {
+        return;
+    }
     
         GDetailViewController *GDVC = [[GDetailViewController alloc] init];
         GStatus *s = self.array[indexPath.row];
@@ -294,6 +293,7 @@
         GDM.sid        = s.sid;
         GDVC.GDM       = GDM;
         [self.navigationController pushViewController:GDVC animated:YES];
+    
 }
 
 

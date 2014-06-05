@@ -14,11 +14,20 @@
  *
  *  name: 图片名
  */
-
 + (UIImage *)imageWithName:(NSString *)name;
 
-
+/**
+ *  拉伸图片
+ *
+ *  name: 图片名
+ */
 + (UIImage *)resizeImageWithImageName:(NSString *)name;
 
+/**
+ *  拉伸图片
+ *
+ *  name: 图片名
+ */
 + (UIImage *)resizeImageWithImageName:(NSString *)name left:(CGFloat)left top:(CGFloat)top;
+
 @end

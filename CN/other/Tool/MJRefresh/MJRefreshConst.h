@@ -7,9 +7,9 @@
 //
 
 #ifdef DEBUG
-#define MJLog(...) NSLog(__VA_ARGS__)
+#define GLog(...) NSLog(__VA_ARGS__)
 #else
-#define MJLog(...)
+#define GLog(...)
 #endif
 
 // 文字颜色

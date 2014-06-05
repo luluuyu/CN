@@ -45,14 +45,21 @@
 
 @implementation GViewController
 
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    
+    if (IOS7_OR_LATER) {
+    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+    }
 
 	self.tableView.rowHeight = 230;
-    
 //    // 初始化数据
 //    [self initData];
     

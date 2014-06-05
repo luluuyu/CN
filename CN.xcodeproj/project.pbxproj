@@ -324,6 +324,11 @@
 			isa = PBXGroup;
 			children = (
 				276CB11B193AC2BD00B4FE58 /* AFNetworking */,
+				2779068D191D121C0081C136 /* webLib */,
+				27937382191DE2F400AC7108 /* MJRefresh */,
+				277906AF191D128E0081C136 /* FMDB */,
+				277906C0191D12EF0081C136 /* MJExtension */,
+				2795A3BB193A127C005B0E57 /* MBProgressHUD */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -387,26 +392,20 @@
 			isa = PBXGroup;
 			children = (
 				276CB11A193AC2BD00B4FE58 /* lib */,
-				2779067D191D121C0081C136 /* service */,
+				2779067D191D121C0081C136 /* Tool */,
 			);
 			name = lib;
 			path = other;
 			sourceTree = "<group>";
 		};
-		2779067D191D121C0081C136 /* service */ = {
+		2779067D191D121C0081C136 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				2795A3BB193A127C005B0E57 /* MBProgressHUD */,
-				27937382191DE2F400AC7108 /* MJRefresh */,
-				277906C0191D12EF0081C136 /* MJExtension */,
-				277906AF191D128E0081C136 /* FMDB */,
 				2779A260193EDA8F003FFF5B /* SQLTool */,
 				2779067E191D121C0081C136 /* HTTP Tool */,
 				27790687191D121C0081C136 /* imageTool */,
 				2779068A191D121C0081C136 /* NSString Tool */,
-				2779068D191D121C0081C136 /* webTool */,
 			);
-			name = service;
 			path = Tool;
 			sourceTree = "<group>";
 		};
@@ -438,7 +437,7 @@
 			path = "NSString Tool";
 			sourceTree = "<group>";
 		};
-		2779068D191D121C0081C136 /* webTool */ = {
+		2779068D191D121C0081C136 /* webLib */ = {
 			isa = PBXGroup;
 			children = (
 				2779068E191D121C0081C136 /* SHXMLParser.h */,
@@ -452,7 +451,8 @@
 				27790696191D121C0081C136 /* XPathQuery.h */,
 				27790697191D121C0081C136 /* XPathQuery.m */,
 			);
-			path = webTool;
+			name = webLib;
+			path = ../Tool/webTool;
 			sourceTree = "<group>";
 		};
 		277906AF191D128E0081C136 /* FMDB */ = {
@@ -470,7 +470,8 @@
 				277906B9191D128E0081C136 /* FMResultSet.h */,
 				277906BA191D128E0081C136 /* FMResultSet.m */,
 			);
-			path = FMDB;
+			name = FMDB;
+			path = ../Tool/FMDB;
 			sourceTree = "<group>";
 		};
 		277906C0191D12EF0081C136 /* MJExtension */ = {
@@ -496,7 +497,8 @@
 				277906D2191D12EF0081C136 /* NSObject+MJMember.h */,
 				277906D3191D12EF0081C136 /* NSObject+MJMember.m */,
 			);
-			path = MJExtension;
+			name = MJExtension;
+			path = ../Tool/MJExtension;
 			sourceTree = "<group>";
 		};
 		277906DE191D18FA0081C136 /* Home(首页) */ = {
@@ -575,7 +577,8 @@
 				2793738B191DE2F400AC7108 /* MJRefreshHeaderView.h */,
 				2793738C191DE2F400AC7108 /* MJRefreshHeaderView.m */,
 			);
-			path = MJRefresh;
+			name = MJRefresh;
+			path = ../Tool/MJRefresh;
 			sourceTree = "<group>";
 		};
 		2795A3BB193A127C005B0E57 /* MBProgressHUD */ = {
@@ -587,7 +590,8 @@
 				2795A3BF193A127C005B0E57 /* MBProgressHUD.h */,
 				2795A3C0193A127C005B0E57 /* MBProgressHUD.m */,
 			);
-			path = MBProgressHUD;
+			name = MBProgressHUD;
+			path = ../Tool/MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		279CA7B3191D08CE009C6DA0 = {

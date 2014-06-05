@@ -9,7 +9,7 @@
 
 #import "GDetailViewController.h"
 #import "GDetailModel.h"
-
+#import "GStastusDetailCacheTool.h"
 #import "MBProgressHUD+MJ.h"
 
 @interface GDetailViewController () <UIScrollViewDelegate>
@@ -26,25 +26,38 @@
 
 
 
+#pragma mark  初始化相关布局
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = self.GDM.title_show;
-    
+    if (IOS7_OR_LATER) {
+        self.automaticallyAdjustsScrollViewInsets=NO;
+    }
     // 设置显示的内容
-    [self initWithContent];
-
+    if ([GStastusDetailCacheTool isStatusAlreadyIn:[self.GDM.sid intValue]])
+    {
+        NSArray *arr = [GStastusDetailCacheTool readStatuesWithSid:[self.GDM.sid intValue]];
+        [self setupGDetailViewWithData:arr];
+    } else {
+        [self initWithContent];
+    }
 }
 
+#pragma mark 加载数据
 // 加载数据
 - (void)initWithContent
 {
     [self.GDM setupContentWithURL:self.GDM.url_show success:^(NSArray *arr) {
         
         if (arr) {
+            
             [self setupGDetailViewWithData:arr];
+            // 存储数据
+            NSDictionary *tempDict = @{@"sid": self.GDM.sid, @"sta": arr};
+            [GStastusDetailCacheTool addStatus:tempDict];
         }
         
     } failure:^(NSError *error) {
@@ -54,24 +67,19 @@
 
 - (void)setupGDetailViewWithData:(NSArray *)arr
 {
-    CGRect screen  =[UIScreen mainScreen].bounds;
+    CGRect screen  = [UIScreen mainScreen].bounds;
     GDetailView  *GDV = [[GDetailView alloc]initWithFrame:CGRectMake(0, 0, 320,screen.size.height-44)];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    // 传递 title 数据
+    GDV.title_show = self.GDM.title_show;
+    GDV.hometext_show_short = self.GDM.hometext_show_short;
+    // 传递内容数据
     GDV.arr = arr;
     GDV.contentSize = CGSizeMake(self.view.bounds.size.width, GDV.contSize.size.height);
     [self.view addSubview:GDV];
-
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
     
 }
-
-
-
 
 
 - (void)viewDidDisappear:(BOOL)animated

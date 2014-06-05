@@ -129,7 +129,7 @@
                 int currentSid = [dict[@"sid"] intValue];
                 
                 // 当前数据的sid sid 大于 本地数据库存储的最大 sid
-                if (![GStatusCacheTool isStatusAlreadyIn:currentSid]) {
+                if (![GStatusCacheTool isSidAlreadyIn:currentSid]) {
                     [GStatusCacheTool addStatus:dict];
                     // 判断是否需要写入本次获取到的最小 sid
                     if (i == (arr.count - 1) )  {
@@ -182,10 +182,6 @@
     
     
     
-    
-    
-    
-    
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc]init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
 
@@ -229,10 +225,10 @@
                 [ma addObject:dict];
                 
                 //当前数据的sid
-                unsigned long currentSid = [dict[@"sid"] intValue];
+                int currentSid = [dict[@"sid"] intValue];
                 
-                //如果网络数据的 sid 大于 本地数据库存储的最大 sid
-                if (currentSid > sid) {
+                //
+                if (![GStatusCacheTool isSidAlreadyIn:currentSid]) {
                     [GStatusCacheTool addStatus:dict];
                 }
                 

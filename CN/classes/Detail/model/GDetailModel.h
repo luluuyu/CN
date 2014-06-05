@@ -14,6 +14,7 @@
 @property (nonatomic,copy  )NSString        *title_show;                   //新闻标题
 @property (nonatomic,copy  )NSString        *hometext_show_short;          //新闻子标题
 @property (nonatomic,copy  )NSArray         *detailContent;                //文章内容 & 图像地址
+@property (nonatomic,copy  )NSString        *sid;                          //sid
 
 
 

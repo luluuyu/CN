@@ -257,7 +257,7 @@
    
     GTableViewCell *cell = [GTableViewCell cellWithTableView:tableView];
     
-    if (self.array.count != 0) {
+    if (self.array.count > 0) {
         
         GStatus *s = self.array[indexPath.row];
         cell.contLable.text  = s.hometext_show_short;
@@ -281,15 +281,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	
-    GDetailViewController *GDVC = [[GDetailViewController alloc] init];
+    if (self.array.count == 0) {
+        return;
+    }
     
-    GStatus *s = self.array[indexPath.row];
-    
-	GDetailModel *GDM = [[GDetailModel alloc]init];
-    GDM.url_show = s.url_show;
-    GDM.title_show = s.title_show;
-	GDVC.GDM = GDM;
-	[self.navigationController pushViewController:GDVC animated:YES];
+        GDetailViewController *GDVC = [[GDetailViewController alloc] init];
+        GStatus *s = self.array[indexPath.row];
+        GDetailModel *GDM = [[GDetailModel alloc]init];
+        GDM.title_show = s.title_show;
+        GDM.hometext_show_short = s.hometext_show_short;
+        GDM.url_show   = s.url_show;
+        GDM.sid        = s.sid;
+        GDVC.GDM       = GDM;
+        [self.navigationController pushViewController:GDVC animated:YES];
 }
 
 

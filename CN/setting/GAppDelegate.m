@@ -8,6 +8,7 @@
 
 #import "GAppDelegate.h"
 #import "GViewController.h"
+#import <Crashlytics/Crashlytics.h>
 @implementation GAppDelegate
 
 
@@ -21,7 +22,7 @@
 	self.navigationController		= [[UINavigationController alloc] initWithRootViewController:GV];
 	self.window.rootViewController	= self.navigationController;
 	[self.window makeKeyAndVisible];
-	
+	[Crashlytics startWithAPIKey:@"5e0b7bb211f1e833fb7f2c20c320cab13d19bab2"];
     return YES;
 }
 							

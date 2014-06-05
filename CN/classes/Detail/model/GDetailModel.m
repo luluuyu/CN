@@ -21,6 +21,7 @@
 - (void)setupContentWithURL:(NSString *)URL success:(void (^)(NSArray *arr))success
                     failure:(void (^)(NSError *error))failure
 {
+    
     // 用 AFN 获取网页内容
     AFHTTPRequestOperationManager * m = [AFHTTPRequestOperationManager manager];
     
@@ -35,9 +36,12 @@
      success (self.detailContent);
      
  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     
      failure(error);
+     
  }];
 
+    
     
 }
 
@@ -106,7 +110,7 @@
         }
 
     }
-    
+       
     return self.detailContent = contArr;
 }
 

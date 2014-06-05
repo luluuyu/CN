@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270B31D8193F6A47001FEB46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270B31D7193F6A47001FEB46 /* Crashlytics.framework */; };
 		27280F12193AEE0200677A41 /* GStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F0F193AEE0200677A41 /* GStatus.m */; };
 		27280F13193AEE0200677A41 /* GStatusesSid.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F11193AEE0200677A41 /* GStatusesSid.m */; };
 		27280F16193AEE4D00677A41 /* GViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F15193AEE4D00677A41 /* GViewController.m */; };
 		27280F1C193AEE5400677A41 /* GSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F18193AEE5400677A41 /* GSView.m */; };
 		27280F1D193AEE5400677A41 /* GTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F1A193AEE5400677A41 /* GTableViewCell.m */; };
 		27280F1E193AEE5400677A41 /* GTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27280F1B193AEE5400677A41 /* GTableViewCell.xib */; };
-		27442E2D193E25C300B148FE /* GLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27442E2C193E25C300B148FE /* GLabel.m */; };
 		2768A382191D38DF005C4C24 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2768A366191D38DF005C4C24 /* MKAnnotationView+WebCache.m */; };
 		2768A383191D38DF005C4C24 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 2768A368191D38DF005C4C24 /* NSData+ImageContentType.m */; };
 		2768A384191D38DF005C4C24 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2768A36A191D38DF005C4C24 /* SDImageCache.m */; };
@@ -45,7 +45,6 @@
 		276DB1FF191D0CCE003E5BE4 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 276DB1FE191D0CCE003E5BE4 /* libsqlite3.dylib */; };
 		276DB236191D0EA8003E5BE4 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 276DB1FC191D0CC4003E5BE4 /* libxml2.2.dylib */; };
 		277906A4191D121C0081C136 /* GHTTPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27790680191D121C0081C136 /* GHTTPTool.m */; };
-		277906A6191D121C0081C136 /* GStatusCacheTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27790684191D121C0081C136 /* GStatusCacheTool.m */; };
 		277906A9191D121C0081C136 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2779068C191D121C0081C136 /* NSString+Extension.m */; };
 		277906AA191D121C0081C136 /* SHXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2779068F191D121C0081C136 /* SHXMLParser.m */; };
 		277906AB191D121C0081C136 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 27790691191D121C0081C136 /* TFHpple.m */; };
@@ -66,6 +65,8 @@
 		277906DA191D12EF0081C136 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 277906CF191D12EF0081C136 /* NSObject+MJCoding.m */; };
 		277906DB191D12EF0081C136 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 277906D1191D12EF0081C136 /* NSObject+MJKeyValue.m */; };
 		277906DC191D12EF0081C136 /* NSObject+MJMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 277906D3191D12EF0081C136 /* NSObject+MJMember.m */; };
+		2779A263193EDA8F003FFF5B /* GStatusCacheTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2779A262193EDA8F003FFF5B /* GStatusCacheTool.m */; };
+		2779A267193EE0B4003FFF5B /* GStastusDetailCacheTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2779A266193EE0B4003FFF5B /* GStastusDetailCacheTool.m */; };
 		2793738D191DE2F400AC7108 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27937383191DE2F400AC7108 /* MJRefresh.bundle */; };
 		2793738E191DE2F400AC7108 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27937386191DE2F400AC7108 /* MJRefreshBaseView.m */; };
 		2793738F191DE2F400AC7108 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 27937388191DE2F400AC7108 /* MJRefreshConst.m */; };
@@ -101,6 +102,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		270B31D7193F6A47001FEB46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		27280F0E193AEE0200677A41 /* GStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatus.h; sourceTree = "<group>"; };
 		27280F0F193AEE0200677A41 /* GStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStatus.m; sourceTree = "<group>"; };
 		27280F10193AEE0200677A41 /* GStatusesSid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatusesSid.h; sourceTree = "<group>"; };
@@ -112,8 +114,6 @@
 		27280F19193AEE5400677A41 /* GTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTableViewCell.h; sourceTree = "<group>"; };
 		27280F1A193AEE5400677A41 /* GTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTableViewCell.m; sourceTree = "<group>"; };
 		27280F1B193AEE5400677A41 /* GTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTableViewCell.xib; sourceTree = "<group>"; };
-		27442E2B193E25C300B148FE /* GLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLabel.h; sourceTree = "<group>"; };
-		27442E2C193E25C300B148FE /* GLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLabel.m; sourceTree = "<group>"; };
 		2768A365191D38DF005C4C24 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		2768A366191D38DF005C4C24 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		2768A367191D38DF005C4C24 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -174,8 +174,6 @@
 		276DB200191D0CDE003E5BE4 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		2779067F191D121C0081C136 /* GHTTPTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTTPTool.h; sourceTree = "<group>"; };
 		27790680191D121C0081C136 /* GHTTPTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTTPTool.m; sourceTree = "<group>"; };
-		27790683191D121C0081C136 /* GStatusCacheTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatusCacheTool.h; sourceTree = "<group>"; };
-		27790684191D121C0081C136 /* GStatusCacheTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStatusCacheTool.m; sourceTree = "<group>"; };
 		2779068B191D121C0081C136 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		2779068C191D121C0081C136 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		2779068E191D121C0081C136 /* SHXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHXMLParser.h; sourceTree = "<group>"; };
@@ -218,6 +216,10 @@
 		277906D1191D12EF0081C136 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
 		277906D2191D12EF0081C136 /* NSObject+MJMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJMember.h"; sourceTree = "<group>"; };
 		277906D3191D12EF0081C136 /* NSObject+MJMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJMember.m"; sourceTree = "<group>"; };
+		2779A261193EDA8F003FFF5B /* GStatusCacheTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatusCacheTool.h; sourceTree = "<group>"; };
+		2779A262193EDA8F003FFF5B /* GStatusCacheTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStatusCacheTool.m; sourceTree = "<group>"; };
+		2779A265193EE0B4003FFF5B /* GStastusDetailCacheTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStastusDetailCacheTool.h; sourceTree = "<group>"; };
+		2779A266193EE0B4003FFF5B /* GStastusDetailCacheTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStastusDetailCacheTool.m; sourceTree = "<group>"; };
 		27937383191DE2F400AC7108 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		27937384191DE2F400AC7108 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		27937385191DE2F400AC7108 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				276DB1FF191D0CCE003E5BE4 /* libsqlite3.dylib in Frameworks */,
 				279CA7C2191D08CE009C6DA0 /* CoreGraphics.framework in Frameworks */,
 				279CA7C4191D08CE009C6DA0 /* UIKit.framework in Frameworks */,
+				270B31D8193F6A47001FEB46 /* Crashlytics.framework in Frameworks */,
 				279CA7C0191D08CE009C6DA0 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,33 +377,36 @@
 		27790661191D121C0081C136 /* classes */ = {
 			isa = PBXGroup;
 			children = (
-				277906DE191D18FA0081C136 /* Home */,
+				277906DE191D18FA0081C136 /* Home(首页) */,
 				27A5E757193B4115009A1373 /* Detail */,
 			);
 			path = classes;
 			sourceTree = "<group>";
 		};
-		2779067B191D121C0081C136 /* other */ = {
+		2779067B191D121C0081C136 /* lib */ = {
 			isa = PBXGroup;
 			children = (
 				276CB11A193AC2BD00B4FE58 /* lib */,
-				2779067D191D121C0081C136 /* Tool */,
+				2779067D191D121C0081C136 /* service */,
 			);
+			name = lib;
 			path = other;
 			sourceTree = "<group>";
 		};
-		2779067D191D121C0081C136 /* Tool */ = {
+		2779067D191D121C0081C136 /* service */ = {
 			isa = PBXGroup;
 			children = (
 				2795A3BB193A127C005B0E57 /* MBProgressHUD */,
 				27937382191DE2F400AC7108 /* MJRefresh */,
 				277906C0191D12EF0081C136 /* MJExtension */,
 				277906AF191D128E0081C136 /* FMDB */,
+				2779A260193EDA8F003FFF5B /* SQLTool */,
 				2779067E191D121C0081C136 /* HTTP Tool */,
 				27790687191D121C0081C136 /* imageTool */,
 				2779068A191D121C0081C136 /* NSString Tool */,
 				2779068D191D121C0081C136 /* webTool */,
 			);
+			name = service;
 			path = Tool;
 			sourceTree = "<group>";
 		};
@@ -409,8 +415,6 @@
 			children = (
 				2779067F191D121C0081C136 /* GHTTPTool.h */,
 				27790680191D121C0081C136 /* GHTTPTool.m */,
-				27790683191D121C0081C136 /* GStatusCacheTool.h */,
-				27790684191D121C0081C136 /* GStatusCacheTool.m */,
 			);
 			path = "HTTP Tool";
 			sourceTree = "<group>";
@@ -495,13 +499,14 @@
 			path = MJExtension;
 			sourceTree = "<group>";
 		};
-		277906DE191D18FA0081C136 /* Home */ = {
+		277906DE191D18FA0081C136 /* Home(首页) */ = {
 			isa = PBXGroup;
 			children = (
 				277906DF191D18FA0081C136 /* controller */,
 				277906E7191D18FA0081C136 /* model */,
 				277906E8191D18FA0081C136 /* view */,
 			);
+			name = "Home(首页)";
 			path = Home;
 			sourceTree = "<group>";
 		};
@@ -536,6 +541,24 @@
 				27C1AE18191DB0AC00C5E9B1 /* placeHolderImage.jpg */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		2779A260193EDA8F003FFF5B /* SQLTool */ = {
+			isa = PBXGroup;
+			children = (
+				2779A261193EDA8F003FFF5B /* GStatusCacheTool.h */,
+				2779A262193EDA8F003FFF5B /* GStatusCacheTool.m */,
+			);
+			path = SQLTool;
+			sourceTree = "<group>";
+		};
+		2779A264193EDB96003FFF5B /* cacheTool */ = {
+			isa = PBXGroup;
+			children = (
+				2779A265193EE0B4003FFF5B /* GStastusDetailCacheTool.h */,
+				2779A266193EE0B4003FFF5B /* GStastusDetailCacheTool.m */,
+			);
+			path = cacheTool;
 			sourceTree = "<group>";
 		};
 		27937382191DE2F400AC7108 /* MJRefresh */ = {
@@ -589,6 +612,7 @@
 		279CA7BE191D08CE009C6DA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				270B31D7193F6A47001FEB46 /* Crashlytics.framework */,
 				276DB200191D0CDE003E5BE4 /* libxml2.dylib */,
 				276DB1FE191D0CCE003E5BE4 /* libsqlite3.dylib */,
 				276DB1FC191D0CC4003E5BE4 /* libxml2.2.dylib */,
@@ -604,7 +628,7 @@
 			isa = PBXGroup;
 			children = (
 				27790661191D121C0081C136 /* classes */,
-				2779067B191D121C0081C136 /* other */,
+				2779067B191D121C0081C136 /* lib */,
 				276DB186191D0A32003E5BE4 /* setting */,
 			);
 			path = CN;
@@ -645,6 +669,7 @@
 				27A5E758193B4115009A1373 /* controller */,
 				27A5E75B193B4115009A1373 /* model */,
 				27A5E764193B4115009A1373 /* view */,
+				2779A264193EDB96003FFF5B /* cacheTool */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -674,8 +699,6 @@
 			children = (
 				27A5E765193B4115009A1373 /* GDetailView.h */,
 				27A5E766193B4115009A1373 /* GDetailView.m */,
-				27442E2B193E25C300B148FE /* GLabel.h */,
-				27442E2C193E25C300B148FE /* GLabel.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -690,6 +713,7 @@
 				279CA7B8191D08CE009C6DA0 /* Sources */,
 				279CA7B9191D08CE009C6DA0 /* Frameworks */,
 				279CA7BA191D08CE009C6DA0 /* Resources */,
+				270B31D6193F69F8001FEB46 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -777,6 +801,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		270B31D6193F69F8001FEB46 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 5e0b7bb211f1e833fb7f2c20c320cab13d19bab2 639100ecb1a770cc50e60e9c3f07509f7f7e2359a8fe7a22ede08ecd24e32cdf";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		279CA7B8191D08CE009C6DA0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -792,7 +832,6 @@
 				27C1AE1C191DB23500C5E9B1 /* UIImage+UIImage_G.m in Sources */,
 				276CB134193AC2BD00B4FE58 /* AFURLConnectionOperation.m in Sources */,
 				277906AA191D121C0081C136 /* SHXMLParser.m in Sources */,
-				27442E2D193E25C300B148FE /* GLabel.m in Sources */,
 				2768A382191D38DF005C4C24 /* MKAnnotationView+WebCache.m in Sources */,
 				277906D5191D12EF0081C136 /* MJIvar.m in Sources */,
 				27280F16193AEE4D00677A41 /* GViewController.m in Sources */,
@@ -818,16 +857,17 @@
 				27A5E767193B4115009A1373 /* GDetailViewController.m in Sources */,
 				277906AB191D121C0081C136 /* TFHpple.m in Sources */,
 				2768A388191D38DF005C4C24 /* SDWebImageDownloaderOperation.m in Sources */,
+				2779A267193EE0B4003FFF5B /* GStastusDetailCacheTool.m in Sources */,
 				277906BE191D128E0081C136 /* FMDatabaseQueue.m in Sources */,
 				277906D6191D12EF0081C136 /* MJMember.m in Sources */,
 				277906DB191D12EF0081C136 /* NSObject+MJKeyValue.m in Sources */,
 				27EF720A193B44DB00067F74 /* GParseImage.m in Sources */,
 				2768A38F191D38DF005C4C24 /* UIImageView+WebCache.m in Sources */,
 				277906BF191D128E0081C136 /* FMResultSet.m in Sources */,
+				2779A263193EDA8F003FFF5B /* GStatusCacheTool.m in Sources */,
 				27280F1D193AEE5400677A41 /* GTableViewCell.m in Sources */,
 				276CB131193AC2BD00B4FE58 /* AFHTTPSessionManager.m in Sources */,
 				277906DC191D12EF0081C136 /* NSObject+MJMember.m in Sources */,
-				277906A6191D121C0081C136 /* GStatusCacheTool.m in Sources */,
 				277906A4191D121C0081C136 /* GHTTPTool.m in Sources */,
 				27280F12193AEE0200677A41 /* GStatus.m in Sources */,
 				27937391191DE2F400AC7108 /* MJRefreshHeaderView.m in Sources */,
@@ -972,6 +1012,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CN/CN-Prefix.pch";
 				INFOPLIST_FILE = "CN/CN-Info.plist";
@@ -991,6 +1035,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CN/CN-Prefix.pch";
 				INFOPLIST_FILE = "CN/CN-Info.plist";

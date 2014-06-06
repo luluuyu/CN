@@ -83,6 +83,8 @@
             // 存储数据
             NSDictionary *tempDict = @{@"sid": self.GDM.sid, @"sta": arr};
             [GStastusDetailCacheTool addStatus:tempDict];
+            //设置网络指示器
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }
         
     } failure:^(NSError *error) {

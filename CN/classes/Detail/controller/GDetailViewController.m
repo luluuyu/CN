@@ -34,7 +34,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = GDetailbackGroundColor;
-    self.navigationItem.title = self.GDM.title_show;
+    self.navigationItem.title = @"cnBetter";
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     if (IOS7_OR_LATER) {
         self.automaticallyAdjustsScrollViewInsets = NO;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		270B31D8193F6A47001FEB46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270B31D7193F6A47001FEB46 /* Crashlytics.framework */; };
+		2726113419405BDB006770CA /* FXLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726113319405BDB006770CA /* FXLabel.m */; };
 		27280F12193AEE0200677A41 /* GStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F0F193AEE0200677A41 /* GStatus.m */; };
 		27280F13193AEE0200677A41 /* GStatusesSid.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F11193AEE0200677A41 /* GStatusesSid.m */; };
 		27280F16193AEE4D00677A41 /* GViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27280F15193AEE4D00677A41 /* GViewController.m */; };
@@ -103,6 +104,8 @@
 
 /* Begin PBXFileReference section */
 		270B31D7193F6A47001FEB46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		2726113219405BDB006770CA /* FXLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXLabel.h; sourceTree = "<group>"; };
+		2726113319405BDB006770CA /* FXLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXLabel.m; sourceTree = "<group>"; };
 		27280F0E193AEE0200677A41 /* GStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatus.h; sourceTree = "<group>"; };
 		27280F0F193AEE0200677A41 /* GStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStatus.m; sourceTree = "<group>"; };
 		27280F10193AEE0200677A41 /* GStatusesSid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStatusesSid.h; sourceTree = "<group>"; };
@@ -253,6 +256,8 @@
 		27C1AE18191DB0AC00C5E9B1 /* placeHolderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeHolderImage.jpg; sourceTree = "<group>"; };
 		27C1AE1A191DB23500C5E9B1 /* UIImage+UIImage_G.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImage_G.h"; sourceTree = "<group>"; };
 		27C1AE1B191DB23500C5E9B1 /* UIImage+UIImage_G.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImage_G.m"; sourceTree = "<group>"; };
+		27CD894B1940A678005D0782 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		27CD894C1940A678005D0782 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		27EF7208193B44DB00067F74 /* GParseImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GParseImage.h; sourceTree = "<group>"; };
 		27EF7209193B44DB00067F74 /* GParseImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GParseImage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -284,6 +289,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2726113119405BDB006770CA /* FXLabel */ = {
+			isa = PBXGroup;
+			children = (
+				2726113219405BDB006770CA /* FXLabel.h */,
+				2726113319405BDB006770CA /* FXLabel.m */,
+			);
+			path = FXLabel;
+			sourceTree = "<group>";
+		};
 		2768A364191D38DF005C4C24 /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +337,7 @@
 		276CB11A193AC2BD00B4FE58 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				2726113119405BDB006770CA /* FXLabel */,
 				276CB11B193AC2BD00B4FE58 /* AFNetworking */,
 				2779068D191D121C0081C136 /* webLib */,
 				27937382191DE2F400AC7108 /* MJRefresh */,
@@ -768,6 +783,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 279CA7B3191D08CE009C6DA0;
 			productRefGroup = 279CA7BD191D08CE009C6DA0 /* Products */;
@@ -840,6 +856,7 @@
 				2768A382191D38DF005C4C24 /* MKAnnotationView+WebCache.m in Sources */,
 				277906D5191D12EF0081C136 /* MJIvar.m in Sources */,
 				27280F16193AEE4D00677A41 /* GViewController.m in Sources */,
+				2726113419405BDB006770CA /* FXLabel.m in Sources */,
 				2768A38E191D38DF005C4C24 /* UIImage+WebP.m in Sources */,
 				2795A3C1193A127C005B0E57 /* MBProgressHUD+MJ.m in Sources */,
 				2768A384191D38DF005C4C24 /* SDImageCache.m in Sources */,
@@ -917,6 +934,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				276DB18C191D0A92003E5BE4 /* en */,
+				27CD894B1940A678005D0782 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -925,6 +943,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				279CA7E8191D08CE009C6DA0 /* en */,
+				27CD894C1940A678005D0782 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

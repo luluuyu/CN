@@ -7,6 +7,7 @@
 //
 
 #import "GTableViewCell.h"
+#import "FXLabel.h"
 @interface GTableViewCell ()
 
 
@@ -19,17 +20,25 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     
+
 }
+
+
 
 + (instancetype)cellWithTableView:(UITableView *)tableView
 {
+    
+    
     static NSString *ID = @"cell";
     GTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     
     if (cell == nil) {
         
         cell = [[NSBundle mainBundle] loadNibNamed:@"GTableViewCell" owner:nil options:nil][0];
-        
+        cell.titleLable.shadowColor = nil;
+        cell.titleLable.shadowOffset = CGSizeMake(0.0f, 1.0f);
+        cell.titleLable.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.35f];
+        cell.titleLable.shadowBlur = 3.0f;
     }
     
     return cell;

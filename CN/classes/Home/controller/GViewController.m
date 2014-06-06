@@ -22,7 +22,7 @@
 #import "UIImageView+WebCache.h"
 #import "GDetailModel.h"
 #import "GDetailViewController.h"
-
+#import "FXLabel.h"
 #define limitNO @"60"
 
 
@@ -49,15 +49,20 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+
+
     
-    if (IOS7_OR_LATER) {
-    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
-    }
 
 	self.tableView.rowHeight = 230;
 //    // 初始化数据
@@ -265,7 +270,9 @@
         GStatus *s = self.array[indexPath.row];
         cell.contLable.text  = s.hometext_show_short;
         cell.titleLable.text = s.title_show;
-        
+       
+
+
         NSURL *url = [NSURL URLWithString:s.logo];
         //判断如果 URL 中含有空格的时候, 处理返回的 nsurl 为空的BUG
         if (url == nil) {

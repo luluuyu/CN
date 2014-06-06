@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class FXLabel;
 @interface GTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *titleLable;
+@property (weak, nonatomic) IBOutlet FXLabel *titleLable;
 @property (weak, nonatomic) IBOutlet UILabel *contLable;
 @property (weak, nonatomic) IBOutlet UIImageView *imageV;
 @property (weak, nonatomic) IBOutlet UILabel *bottomLabel;

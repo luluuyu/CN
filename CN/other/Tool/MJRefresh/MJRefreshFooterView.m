@@ -173,7 +173,7 @@
 #pragma mark 获得scrollView的内容 超出 view 的高度
 - (CGFloat)contentBreakView
 {
-    CGFloat h = _scrollView.frame.size.height - _scrollViewInitInset.bottom - _scrollViewInitInset.top;
+    CGFloat h = _scrollView.frame.size.height - _scrollViewInitInset.bottom - _scrollViewInitInset.top ;
     return _scrollView.contentSize.height - h;
 }
 

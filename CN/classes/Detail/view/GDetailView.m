@@ -24,7 +24,7 @@
 #import "GDetailView.h"
 #import "NSString+Extension.h"
 #import "UIImageView+WebCache.h"
-
+#import "FXLabel.h"
 @interface GDetailView ()
 
 
@@ -180,9 +180,10 @@
     UILabel *hometext_show_shortLabel = [[UILabel alloc]initWithFrame:hometext_show_shortRect];
     hometext_show_shortLabel.font = [hometext_show_shortLabel.font fontWithSize:GHomeSFontSize];
     hometext_show_shortLabel.text = [NSString stringWithFormat:@"    %@",self.hometext_show_short];
-    hometext_show_shortLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    hometext_show_shortLabel.lineBreakMode = NSLineBreakByWordWrapping;
     hometext_show_shortLabel.numberOfLines = 0;
-    
+    hometext_show_shortLabel.backgroundColor = GDetailbackGroundColor;
+
     [self addSubview:hometext_show_shortLabel];
     
     
@@ -193,10 +194,10 @@
                                 hometext_show_shortRect.origin.y + subTitleSize.height + kLabelWithLabelMargin );
     UIView * backView = [[UIView alloc]initWithFrame:CGRectMake(
                                                                0,
-                                                               hometext_show_shortRect.origin.y - 5,
+                                                               hometext_show_shortRect.origin.y - 3,
                                                                [UIScreen mainScreen].bounds.size.width,
-                                                               hometext_show_shortRect.size.height)];
-    backView.backgroundColor = [UIColor colorWithRed:230/255 green:230/255 blue:230/255 alpha:0.02];
+                                                               hometext_show_shortRect.size.height + 5)];
+    backView.backgroundColor = [UIColor colorWithRed:235/255 green:235/255 blue:235/255 alpha:0.05];
     
     [self addSubview:backView];
     

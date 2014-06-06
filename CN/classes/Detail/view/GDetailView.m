@@ -18,6 +18,7 @@
 #define miniLabelTextLimited     5          // label 显示的最小文字限制
 #define GLabelLeftSection        13         // label 的左边距
 #define GLabelTopsection         (IOS7_OR_LATER?70:10)         // 首个 subView 上部预留边距
+#define GTopImageViewH           100        // 顶部的 imageView
 
 
 
@@ -25,9 +26,11 @@
 #import "NSString+Extension.h"
 #import "UIImageView+WebCache.h"
 #import "FXLabel.h"
+
 @interface GDetailView ()
 
-
+@property (nonatomic,strong) UIImageView      *imageView;
+@property (nonatomic, strong )UIView          *backView;
 
 @end
 
@@ -39,15 +42,27 @@
 {
      _arr = arr;
     
+    if (self.backView == nil) {
+        self.backView = [[UIView alloc]init];
+        if (IOS7_OR_LATER) {
+            self.backView.backgroundColor = GDetailbackGroundColor;
+        }
+        
+        [self addSubview:self.backView];
+    }
+    
     [self setTitleAndSubtitle];
     
     // 处理 arr (设置 view 的显示)
  
     [self processArr:arr];
     
+    [self setupTopImageView];
     
     
 }
+
+
 
 // 处理 arr (设置 view 的显示)
 - (void)processArr:(NSArray *)arr
@@ -106,7 +121,7 @@
                                     GLabelMaxWidth ,
                                     self.contSize.origin.y + contentSize.height + kLabelWithLabelMargin);
         // 最后返回最新的 self.contSize 供其他 subview 使用
-        [self insertSubview:contLabel atIndex:self.subviews.count];
+        [self.backView insertSubview:contLabel atIndex:self.subviews.count];
 
     
 }
@@ -120,14 +135,14 @@
 
         UIImageView *imageView  = [[UIImageView alloc]
                                    initWithFrame:imageViewCGRect];
-    imageView.backgroundColor = GDetailbackGroundColor;
+        imageView.backgroundColor = GDetailbackGroundColor;
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [imageView setImageWithURL:[NSURL URLWithString:url]
                   placeholderImage:[UIImage imageWithName:@"4"]
                          completed:^( UIImage *image, NSError *error, SDImageCacheType cacheType) {
             
         }];
-        [self insertSubview:imageView atIndex:self.subviews.count];
+        [self.backView insertSubview:imageView atIndex:self.subviews.count];
     
         // 最后返回最新的 self.contSize 供其他 subview 使用
         self.contSize = CGRectMake( GLabelLeftSection ,
@@ -153,18 +168,20 @@
     
     // 2)设置title_show & 添加到 subView
     CGRect title_showLabelCGRect = CGRectMake(GLabelLeftSection ,
-               GLabelTopsection ,
-               GLabelMaxWidth ,
-               title_showSize.height + kimageWithimageMargin);
-    UILabel *title_showLabel = [[UILabel alloc]initWithFrame:title_showLabelCGRect];
-    title_showLabel.backgroundColor = GDetailbackGroundColor;
+                                              GLabelTopsection + GTopImageViewH * 0.2,
+                                              GLabelMaxWidth    ,
+                                              title_showSize.height + kimageWithimageMargin);
+    FXLabel *title_showLabel = [[FXLabel alloc]initWithFrame:title_showLabelCGRect];
     title_showLabel.font = [UIFont boldSystemFontOfSize:20];
     title_showLabel.text = self.title_show;
     title_showLabel.lineBreakMode = NSLineBreakByCharWrapping;
     title_showLabel.numberOfLines = 0;
     title_showLabel.textColor = [UIColor colorWithRed: 4/255.0 green:40/255.0 blue:150/255.0 alpha:1];
-    title_showLabel.backgroundColor = GDetailbackGroundColor;
-    [self addSubview:title_showLabel];
+    title_showLabel.backgroundColor = [UIColor clearColor];
+    title_showLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    title_showLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.35f];
+    title_showLabel.shadowBlur = 3.0f;
+    [self.backView addSubview:title_showLabel];
     
     
     // 设置子标题
@@ -182,33 +199,41 @@
     hometext_show_shortLabel.text = [NSString stringWithFormat:@"    %@",self.hometext_show_short];
     hometext_show_shortLabel.lineBreakMode = NSLineBreakByWordWrapping;
     hometext_show_shortLabel.numberOfLines = 0;
-    hometext_show_shortLabel.backgroundColor = GDetailbackGroundColor;
-
-    [self addSubview:hometext_show_shortLabel];
-    
-    
     // 最后返回最新的 self.contSize 供其他 subview 使用
     self.contSize = CGRectMake( GLabelLeftSection ,
                                 hometext_show_shortRect.origin.y + subTitleSize.height + kLabelWithLabelMargin ,
                                 GLabelMaxWidth ,
                                 hometext_show_shortRect.origin.y + subTitleSize.height + kLabelWithLabelMargin );
-    UIView * backView = [[UIView alloc]initWithFrame:CGRectMake(
-                                                               0,
-                                                               hometext_show_shortRect.origin.y - 3,
-                                                               [UIScreen mainScreen].bounds.size.width,
-                                                               hometext_show_shortRect.size.height + 5)];
-    backView.backgroundColor = [UIColor colorWithRed:235/255 green:235/255 blue:235/255 alpha:0.05];
-    
-    [self addSubview:backView];
-    
-    
-    
-    
 
+    UIImageView * backView = [[UIImageView alloc]initWithFrame:
+                              CGRectMake(0,
+                                         hometext_show_shortRect.origin.y - 3,
+                                         [UIScreen mainScreen].bounds.size.width,
+                                         hometext_show_shortRect.size.height + 5)];
+    if (IOS7_OR_LATER) {
+        backView.image = [UIImage resizeImageWithImageName:@"3" left:0.5 top:0.5];
+    }else {
+        backView.image = [UIImage resizeImageWithImageName:@"wihte" left:0.5 top:0.5];
+    }
+    [self.backView addSubview:backView];
+
+    [self.backView addSubview:hometext_show_shortLabel];
+
+}
+
+- (void)setupTopImageView
+{
+    self.imageView = [[UIImageView alloc]init];
     
+    self.imageView.frame = CGRectMake(0 , 64 , 320, 100);
     
+    self.imageView.backgroundColor = [UIColor colorWithWhite:255.0/255.0 alpha:0];
+    
+    [self.backView insertSubview:self.imageView atIndex:self.subviews.count];
     
 }
+
+
 
 
 

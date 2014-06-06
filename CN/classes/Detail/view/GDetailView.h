@@ -8,13 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  GDetailViewDelegate 滚动代理
+ */
+
 @interface GDetailView : UIScrollView
+
 /** 新闻标题 */
 @property (nonatomic, copy  )NSArray         *arr;
 /** 新闻标题 */
 @property (nonatomic, assign)CGRect           contSize;
 /** 新闻标题 */
-@property (nonatomic,copy   )NSString        *title_show;
+@property (nonatomic, copy   )NSString        *title_show;
 /** 新闻标题 */
-@property (nonatomic,copy   )NSString        *hometext_show_short;
+@property (nonatomic, copy   )NSString        *hometext_show_short;
+
+
+
 @end

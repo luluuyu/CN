@@ -50,6 +50,8 @@
 
 - (void)getOldStatusesFromNetwork:(GStatusesSid *)param success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure {
     
+    //设置网络指示器
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     // 先取出数据中最大和最小的 sid
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -159,6 +161,8 @@
 
 - (void)getNewStatusesFromNetwork:(int)sid success:(void (^)(NSArray *newData))success failure:(void (^)(NSError *error))failure {
     
+    //设置网络指示器
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     NSURL *url = [NSURL URLWithString:[self getURLStr:1]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -186,7 +190,7 @@
         
 
         
-        if (!connectionError) {
+        if (response) {
             
             NSString *strReturn = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             

@@ -48,21 +48,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-
-
-    
 
 	self.tableView.rowHeight = 230;
 //    // 初始化数据
@@ -90,6 +82,11 @@
         
         self.array = [self loadDataFromSQLWithLimit:limitNO];
     }
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return NO;
 }
 
 - (void)setupRefreshView
@@ -179,6 +176,8 @@
             NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
                 [self.tableView reloadData];
                 [self.footer endRefreshing];
+                //设置网络指示器
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             }];
             // UI的更新需要回到主线程
             [[NSOperationQueue mainQueue] addOperation:opFailure];
@@ -198,6 +197,8 @@
                 [MBProgressHUD showError:@"请连接互联网"];
                 [self.tableView reloadData];
                 [self.footer endRefreshing];
+                //设置网络指示器
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             }];
             // 回到主线程更新 UI
             
@@ -222,6 +223,8 @@
              self.array = newData;
              [self.tableView reloadData];
              [self.header endRefreshing];
+            //设置网络指示器
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }];
         // UI的更新需要回到主线程
         [[NSOperationQueue mainQueue] addOperation:opFailure];
@@ -235,6 +238,8 @@
             [MBProgressHUD showError:@"请连接互联网"];
             [self.tableView reloadData];
             [self.header endRefreshing];
+            //设置网络指示器
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }];
         // 回到主线程更新 UI
         [[NSOperationQueue mainQueue] addOperation:opFailure];

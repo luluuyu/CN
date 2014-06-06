@@ -87,7 +87,6 @@
 		27A5E767193B4115009A1373 /* GDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5E75A193B4115009A1373 /* GDetailViewController.m */; };
 		27A5E769193B4115009A1373 /* GDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5E75F193B4115009A1373 /* GDetailModel.m */; };
 		27A5E76C193B4115009A1373 /* GDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5E766193B4115009A1373 /* GDetailView.m */; };
-		27C1AE19191DB0AC00C5E9B1 /* placeHolderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27C1AE18191DB0AC00C5E9B1 /* placeHolderImage.jpg */; };
 		27C1AE1C191DB23500C5E9B1 /* UIImage+UIImage_G.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C1AE1B191DB23500C5E9B1 /* UIImage+UIImage_G.m */; };
 		27EF720A193B44DB00067F74 /* GParseImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF7209193B44DB00067F74 /* GParseImage.m */; };
 /* End PBXBuildFile section */
@@ -168,9 +167,9 @@
 		276DB187191D0A62003E5BE4 /* GAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAppDelegate.h; sourceTree = "<group>"; };
 		276DB188191D0A62003E5BE4 /* GAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAppDelegate.m; sourceTree = "<group>"; };
 		276DB18C191D0A92003E5BE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
-		276DB18D191D0A92003E5BE4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		276DB18D191D0A92003E5BE4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = setting/Images.xcassets; sourceTree = "<group>"; };
 		276DB197191D0B5F003E5BE4 /* CN-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CN-Info.plist"; sourceTree = "<group>"; };
-		276DB198191D0B5F003E5BE4 /* CN-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CN-Prefix.pch"; sourceTree = "<group>"; };
+		276DB198191D0B5F003E5BE4 /* CN-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CN-Prefix.pch"; path = "../CN-Prefix.pch"; sourceTree = "<group>"; };
 		276DB199191D0B5F003E5BE4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		276DB1FC191D0CC4003E5BE4 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		276DB1FE191D0CCE003E5BE4 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -253,7 +252,6 @@
 		27A5E75F193B4115009A1373 /* GDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDetailModel.m; sourceTree = "<group>"; };
 		27A5E765193B4115009A1373 /* GDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDetailView.h; sourceTree = "<group>"; };
 		27A5E766193B4115009A1373 /* GDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDetailView.m; sourceTree = "<group>"; };
-		27C1AE18191DB0AC00C5E9B1 /* placeHolderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeHolderImage.jpg; sourceTree = "<group>"; };
 		27C1AE1A191DB23500C5E9B1 /* UIImage+UIImage_G.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImage_G.h"; sourceTree = "<group>"; };
 		27C1AE1B191DB23500C5E9B1 /* UIImage+UIImage_G.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImage_G.m"; sourceTree = "<group>"; };
 		27CD894B1940A678005D0782 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -378,9 +376,9 @@
 			isa = PBXGroup;
 			children = (
 				276DB18A191D0A92003E5BE4 /* en.lproj */,
-				276DB18D191D0A92003E5BE4 /* Images.xcassets */,
 				276DB187191D0A62003E5BE4 /* GAppDelegate.h */,
 				276DB188191D0A62003E5BE4 /* GAppDelegate.m */,
+				276DB198191D0B5F003E5BE4 /* CN-Prefix.pch */,
 				279CA7C6191D08CE009C6DA0 /* Supporting Files */,
 			);
 			path = setting;
@@ -389,7 +387,6 @@
 		276DB18A191D0A92003E5BE4 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				276DB18B191D0A92003E5BE4 /* InfoPlist.strings */,
 			);
 			path = en.lproj;
 			sourceTree = "<group>";
@@ -403,13 +400,13 @@
 			path = classes;
 			sourceTree = "<group>";
 		};
-		2779067B191D121C0081C136 /* lib */ = {
+		2779067B191D121C0081C136 /* tool & lib */ = {
 			isa = PBXGroup;
 			children = (
 				276CB11A193AC2BD00B4FE58 /* lib */,
 				2779067D191D121C0081C136 /* Tool */,
 			);
-			name = lib;
+			name = "tool & lib";
 			path = other;
 			sourceTree = "<group>";
 		};
@@ -555,7 +552,6 @@
 				27280F19193AEE5400677A41 /* GTableViewCell.h */,
 				27280F1A193AEE5400677A41 /* GTableViewCell.m */,
 				27280F1B193AEE5400677A41 /* GTableViewCell.xib */,
-				27C1AE18191DB0AC00C5E9B1 /* placeHolderImage.jpg */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -647,7 +643,7 @@
 			isa = PBXGroup;
 			children = (
 				27790661191D121C0081C136 /* classes */,
-				2779067B191D121C0081C136 /* lib */,
+				2779067B191D121C0081C136 /* tool & lib */,
 				276DB186191D0A32003E5BE4 /* setting */,
 			);
 			path = CN;
@@ -656,8 +652,9 @@
 		279CA7C6191D08CE009C6DA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				276DB18B191D0A92003E5BE4 /* InfoPlist.strings */,
+				276DB18D191D0A92003E5BE4 /* Images.xcassets */,
 				276DB197191D0B5F003E5BE4 /* CN-Info.plist */,
-				276DB198191D0B5F003E5BE4 /* CN-Prefix.pch */,
 				276DB199191D0B5F003E5BE4 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -801,7 +798,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27C1AE19191DB0AC00C5E9B1 /* placeHolderImage.jpg in Resources */,
 				276DB18F191D0A92003E5BE4 /* Images.xcassets in Resources */,
 				2793738D191DE2F400AC7108 /* MJRefresh.bundle in Resources */,
 				27280F1E193AEE5400677A41 /* GTableViewCell.xib in Resources */,
@@ -937,6 +933,7 @@
 				27CD894B1940A678005D0782 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			path = setting/en.lproj;
 			sourceTree = "<group>";
 		};
 		279CA7E7191D08CE009C6DA0 /* InfoPlist.strings */ = {

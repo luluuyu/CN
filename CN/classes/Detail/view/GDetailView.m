@@ -17,7 +17,7 @@
 #define kimageWithimageMargin    10         // label 与 label 之间的间距
 #define miniLabelTextLimited     5          // label 显示的最小文字限制
 #define GLabelLeftSection        13         // label 的左边距
-#define GLabelTopsection         (IOS7_OR_LATER?70:10)         // 首个 subView 上部预留边距
+#define GLabelTopsection         (IOS7_OR_LATER? 20:20)         // 首个 subView 上部预留边距
 #define GTopImageViewH           100        // 顶部的 imageView
 
 
@@ -168,7 +168,7 @@
     
     // 2)设置title_show & 添加到 subView
     CGRect title_showLabelCGRect = CGRectMake(GLabelLeftSection ,
-                                              GLabelTopsection + GTopImageViewH * 0.2,
+                                              GLabelTopsection  ,
                                               GLabelMaxWidth    ,
                                               title_showSize.height + kimageWithimageMargin);
     FXLabel *title_showLabel = [[FXLabel alloc]initWithFrame:title_showLabelCGRect];

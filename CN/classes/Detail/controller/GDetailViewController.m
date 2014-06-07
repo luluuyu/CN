@@ -7,7 +7,7 @@
 //
 
 #define ScrollViewH (IOS7_OR_LATER ? 10 :54)
-#define imageViewY  (IOS7_OR_LATER ? 64 :0 )
+
 #import "GDetailViewController.h"
 #import "GDetailModel.h"
 #import "GStastusDetailCacheTool.h"

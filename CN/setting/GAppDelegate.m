@@ -8,6 +8,7 @@
 
 #import "GAppDelegate.h"
 #import "GViewController.h"
+#import "GNavController.h"
 #import <Crashlytics/Crashlytics.h>
 @implementation GAppDelegate
 
@@ -19,7 +20,7 @@
 	// Override point for customization after application launch.
     
 	GViewController *GV = [[GViewController alloc] init];
-	UINavigationController *navigationController		= [[UINavigationController alloc] initWithRootViewController:GV];
+	GNavController *navigationController		= [[GNavController alloc] initWithRootViewController:GV];
 	self.window.rootViewController	= navigationController;
 	[self.window makeKeyAndVisible];
 	[Crashlytics startWithAPIKey:@"5e0b7bb211f1e833fb7f2c20c320cab13d19bab2"];

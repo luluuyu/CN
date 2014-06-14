@@ -46,12 +46,6 @@
 
 @implementation GViewController
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    
-}
-
 
 - (void)viewDidLoad
 {
@@ -61,7 +55,6 @@
 
     // 执行刷新操作
     [self setupRefreshView];
-    
     
 }
 
@@ -86,23 +79,8 @@
     footer.scrollView = self.tableView;
     footer.delegate = self;
     self.footer = footer;
-//    footer.beginRefreshingBlock = ^(MJRefreshBaseView *refreshView){
-//        IWLog(@"refreshing.....");
-//    };
  
 }
-
-- (void)dealloc
-{
-    // 释放内存
-    [self.header free];
-    [self.footer free];
-    
-}
-
-
-
-
 #pragma mark - 刷新控件开始刷新的时候调用这个方法
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
 {
@@ -116,20 +94,20 @@
 
 
 
-// 从数据库加载数据 从param. sid_since 到 sid_end
+#pragma mark - 从数据库加载数据 从param. sid_since 到 sid_end
 - (NSArray *)loadDataFromSQL:(GStatusesSid *)param
 {
     return  [GStatus objectArrayWithKeyValuesArray:[GStatusCacheTool readStatuesWithParam:param]];
 }
 
-// 从数据库加载 xxx 条数据
+#pragma mark - 从数据库加载 xxx 条数据
 - (NSArray *)loadDataFromSQLWithLimit:(NSString *)limit
 {
     return  [GStatus objectArrayWithKeyValuesArray:[GStatusCacheTool readStatuesWithLimit:limit]];
 }
 
 
-// 加载旧数据
+#pragma mark - 加载旧数据
 - (void)loadOldData
 {
     //取出数据中最小的 mini_Sid
@@ -235,18 +213,16 @@
 
 
 
-#pragma mark - Table View
-
-
+#pragma mark - Table View 的行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.array.count > 0) {
         return self.array.count;
     }
-	return 1;
+	return 0;
 }
 
-// Customize the appearance of table view cells.
+#pragma mark - 设置 cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
@@ -274,7 +250,7 @@
 	return cell;
 }
 
-
+#pragma mark -  设置选中的 cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	
@@ -297,8 +273,7 @@
     
 }
 
-
-
+#pragma mark - 数据的更新
 - (void)addToArrayFrom:(NSArray *)array
 {
     
@@ -312,6 +287,14 @@
     // 添加self.statusFrames的所有元素 添加到 tempArray中
     [tempArray addObjectsFromArray:array];
     self.array = tempArray;
+}
+
+#pragma mark - 释放刷新控件
+- (void)dealloc
+{
+    // 释放内存
+    [self.header free];
+    [self.footer free];
 }
 
 

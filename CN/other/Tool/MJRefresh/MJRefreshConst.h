@@ -9,7 +9,7 @@
 #ifdef DEBUG
 #define GLog(...) NSLog(__VA_ARGS__)
 #else
-#define GLog(...)
+
 #endif
 
 // 文字颜色

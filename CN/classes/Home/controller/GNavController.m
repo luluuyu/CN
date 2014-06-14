@@ -10,6 +10,7 @@
 
 @interface GNavController ()
 
+
 @end
 
 @implementation GNavController
@@ -18,7 +19,6 @@
 {
     // 1.设置导航栏主题
     UINavigationBar *navBar = [UINavigationBar appearance];
-    
     // 设置背景图片
     NSString *bgName = nil;
     if (iOS7) { // 至少是iOS 7.0
@@ -43,7 +43,7 @@
     itemAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:14];
     [item setTitleTextAttributes:itemAttrs forState:UIControlStateNormal];
     
-    if (iOS7) {
+    if (!iOS7) {
         // 设置按钮背景
         [item setBackgroundImage:[UIImage imageNamed:@"NavButton"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
         [item setBackgroundImage:[UIImage imageNamed:@"NavButtonPressed"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];

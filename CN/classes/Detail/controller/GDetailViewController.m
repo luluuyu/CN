@@ -7,6 +7,7 @@
 //
 
 #define ScrollViewH (IOS7_OR_LATER ? 10 :54)
+#define BottomViewH (IOS7_OR_LATER ? 40 :0)
 
 #import "GDetailViewController.h"
 #import "GDetailModel.h"
@@ -34,8 +35,8 @@
 {
     [super viewDidLoad];
     
-    // 设置 imageView_top
-    [self initimageView];
+//    // 设置 imageView_top
+//    [self initimageView];
     
     self.view.backgroundColor = GDetailbackGroundColor;
     self.navigationItem.title = @"cnBetter";
@@ -55,6 +56,8 @@
     }
     
     
+    
+    
 }
 
 - (void)initimageView
@@ -67,6 +70,7 @@
     self.imageView.image = [UIImage resizeImageWithImageName:@"snip" left:0.5 top:0.1];
     
     [self.view addSubview:self.imageView];
+    self.imageView.userInteractionEnabled = YES;
 
 }
 
@@ -106,9 +110,10 @@
     GDV.arr = arr;
     GDV.delegate = self;
     // 滚动范围
-    GDV.contentSize = CGSizeMake(self.view.bounds.size.width, GDV.contSize.size.height);
-//    GDV.backgroundColor = GDetailbackGroundColor;
+    GDV.contentSize = CGSizeMake(self.view.bounds.size.width, GDV.contSize.size.height + BottomViewH);
+    GDV.backgroundColor = GDetailbackGroundColor;
     [self.view addSubview:GDV];
+    GDV.userInteractionEnabled = YES;
     
 }
 
@@ -131,7 +136,6 @@
     }else {
         self.imageView.frame = CGRectMake(0, -scrollView.bounds.origin.y * 0.4 + imageViewY , 320, 100);
     }
-    NSLog(@"%f",scrollView.bounds.origin.y);
 }
 
 

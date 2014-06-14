@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "SDWebImageCompat.h"
 
-typedef NS_ENUM(NSInteger, SDImageCacheType) {
+enum SDImageCacheType
+{
     /**
      * The image wasn't available the SDWebImage caches, but was downloaded from the web.
      */
-    SDImageCacheTypeNone,
+    SDImageCacheTypeNone = 0,
     /**
      * The image was obtained from the disk cache.
      */
@@ -23,19 +24,13 @@ typedef NS_ENUM(NSInteger, SDImageCacheType) {
      */
     SDImageCacheTypeMemory
 };
-
-typedef void(^SDWebImageQueryCompletedBlock)(UIImage *image, SDImageCacheType cacheType);
+typedef enum SDImageCacheType SDImageCacheType;
 
 /**
  * SDImageCache maintains a memory cache and an optional disk cache. Disk cache write operations are performed
  * asynchronous so it doesn’t add unnecessary latency to the UI.
  */
 @interface SDImageCache : NSObject
-
-/**
- * The maximum "total cost" of the in-memory image cache. The cost function is the number of pixels held in memory.
- */
-@property (assign, nonatomic) NSUInteger maxMemoryCost;
 
 /**
  * The maximum length of time to keep an image in the cache, in seconds
@@ -45,7 +40,7 @@ typedef void(^SDWebImageQueryCompletedBlock)(UIImage *image, SDImageCacheType ca
 /**
  * The maximum size of the cache, in bytes.
  */
-@property (assign, nonatomic) NSUInteger maxCacheSize;
+@property (assign, nonatomic) unsigned long long maxCacheSize;
 
 /**
  * Returns global shared cache instance
@@ -90,21 +85,20 @@ typedef void(^SDWebImageQueryCompletedBlock)(UIImage *image, SDImageCacheType ca
  * Store an image into memory and optionally disk cache at the given key.
  *
  * @param image The image to store
- * @param recalculate BOOL indicates if imageData can be used or a new data should be constructed from the UIImage
- * @param imageData The image data as returned by the server, this representation will be used for disk storage
+ * @param data The image data as returned by the server, this representation will be used for disk storage
  *             instead of converting the given image object into a storable/compressed image format in order
  *             to save quality and CPU
  * @param key The unique image cache key, usually it's image absolute URL
  * @param toDisk Store the image to disk cache if YES
  */
-- (void)storeImage:(UIImage *)image recalculateFromImage:(BOOL)recalculate imageData:(NSData *)imageData forKey:(NSString *)key toDisk:(BOOL)toDisk;
+- (void)storeImage:(UIImage *)image imageData:(NSData *)data forKey:(NSString *)key toDisk:(BOOL)toDisk;
 
 /**
  * Query the disk cache asynchronously.
  *
  * @param key The unique key used to store the wanted image
  */
-- (NSOperation *)queryDiskCacheForKey:(NSString *)key done:(SDWebImageQueryCompletedBlock)doneBlock;
+- (NSOperation *)queryDiskCacheForKey:(NSString *)key done:(void (^)(UIImage *image, SDImageCacheType cacheType))doneBlock;
 
 /**
  * Query the memory cache synchronously.
@@ -128,7 +122,7 @@ typedef void(^SDWebImageQueryCompletedBlock)(UIImage *image, SDImageCacheType ca
 - (void)removeImageForKey:(NSString *)key;
 
 /**
- * Remove the image from memory and optionally disk cache synchronously
+ * Remove the image from memory and optionaly disk cache synchronously
  *
  * @param key The unique image cache key
  * @param fromDisk Also remove cache entry from disk if YES
@@ -141,33 +135,19 @@ typedef void(^SDWebImageQueryCompletedBlock)(UIImage *image, SDImageCacheType ca
 - (void)clearMemory;
 
 /**
- * Clear all disk cached images. Non-blocking method - returns immediately.
- * @param completionBlock An block that should be executed after cache expiration completes (optional)
- */
-- (void)clearDiskOnCompletion:(void (^)())completion;
-
-/**
  * Clear all disk cached images
- * @see clearDiskOnCompletion:
  */
 - (void)clearDisk;
 
 /**
- * Remove all expired cached image from disk. Non-blocking method - returns immediately.
- * @param completionBlock An block that should be executed after cache expiration completes (optional)
- */
-- (void)cleanDiskWithCompletionBlock:(void (^)())completionBlock;
-
-/**
  * Remove all expired cached image from disk
- * @see cleanDiskWithCompletionBlock:
  */
 - (void)cleanDisk;
 
 /**
  * Get the size used by the disk cache
  */
-- (NSUInteger)getSize;
+- (unsigned long long)getSize;
 
 /**
  * Get the number of images in the disk cache
@@ -177,11 +157,6 @@ typedef void(^SDWebImageQueryCompletedBlock)(UIImage *image, SDImageCacheType ca
 /**
  * Asynchronously calculate the disk cache's size.
  */
-- (void)calculateSizeWithCompletionBlock:(void (^)(NSUInteger fileCount, NSUInteger totalSize))completionBlock;
-
-/**
- * Check if image exists in cache already
- */
-- (BOOL)diskImageExistsWithKey:(NSString *)key;
+- (void)calculateSizeWithCompletionBlock:(void (^)(NSUInteger fileCount, unsigned long long totalSize))completionBlock;
 
 @end

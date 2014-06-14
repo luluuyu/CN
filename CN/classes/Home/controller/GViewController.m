@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 cubeTC. All rights reserved.
 //
 #define GImageCount 5
+#define limitNO @"60"
 #import "GViewController.h"
 #import "GTableViewCell.h"
 #import "GAppDelegate.h"
@@ -23,7 +24,7 @@
 #import "GDetailModel.h"
 #import "GDetailViewController.h"
 #import "FXLabel.h"
-#define limitNO @"60"
+
 
 
 
@@ -48,41 +49,22 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
 }
 
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-
-	self.tableView.rowHeight = 230;
-//    // 初始化数据
-//    [self initData];
     
+	self.tableView.rowHeight = 230;
+
     // 执行刷新操作
     [self setupRefreshView];
+    
+    
 }
 
-/**
- *  初始化软件的数据
- */
-- (void)initData
-{
-    // 取出最大sid
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *sidMax = [defaults stringForKey:@"maxSid"];
-    
-    // 加载数据 判断是否首次打开
-    if (sidMax) {
-        GStatusesSid *p = [[GStatusesSid alloc]init];
-        p.sid_max   = sidMax;
-        p.sid_since = sidMax;
-        p.sid_end   = [NSString stringWithFormat:@"%d",([p.sid_since intValue] - 120)];
-        
-        self.array = [self loadDataFromSQLWithLimit:limitNO];
-    }
-}
 
 - (BOOL)prefersStatusBarHidden
 {
@@ -331,6 +313,7 @@
     [tempArray addObjectsFromArray:array];
     self.array = tempArray;
 }
+
 
 @end
 

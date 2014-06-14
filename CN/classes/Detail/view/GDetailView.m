@@ -26,11 +26,17 @@
 #import "NSString+Extension.h"
 #import "UIImageView+WebCache.h"
 #import "FXLabel.h"
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
 
-@interface GDetailView ()
+@interface GDetailView () <UIGestureRecognizerDelegate>
 
-@property (nonatomic,strong) UIImageView      *imageView;
-@property (nonatomic, strong )UIView          *backView;
+@property (nonatomic, strong) UIImageView      *imageView;
+@property (nonatomic, strong)UIView          *backView;
+@property (nonatomic, strong) NSMutableArray  *potosArray;
+@property (nonatomic, strong) UIImageView      *logoView;
+@property (nonatomic, assign) int              i;
+
 
 @end
 
@@ -42,13 +48,22 @@
 {
      _arr = arr;
     
+    
     if (self.backView == nil) {
+        
         self.backView = [[UIView alloc]init];
+        [self addSubview:self.backView];
+        self.backView.userInteractionEnabled = YES;
+        
         if (IOS7_OR_LATER) {
             self.backView.backgroundColor = GDetailbackGroundColor;
         }
-        
-        [self addSubview:self.backView];
+    }
+    
+    // 初始化相册数组
+    if (self.potosArray == nil) {
+        NSMutableArray *ma = [NSMutableArray array];
+        self.potosArray = ma;
     }
     
     [self setTitleAndSubtitle];
@@ -59,6 +74,9 @@
     
     [self setupTopImageView];
     
+    self.userInteractionEnabled = YES;
+    
+   
     
 }
 
@@ -79,28 +97,9 @@
     }
 }
 
-/**
- *  计算文字的高度
- *
- *  @param string 要计算的文字
- *
- *  @return 字体的大小
- */
-- (CGSize)sizeOfString:(NSString *)string withFont:(UIFont *)font
-{
-    CGSize contSize;
-    if (IOS7_OR_LATER) {
-        CGSize textMaxSize = CGSizeMake(GLabelMaxWidth, MAXFLOAT);
-        contSize = [string sizeWithFont:font maxSize:textMaxSize];
-    }else{
-        CGSize textMaxSize = CGSizeMake(GLabelMaxWidth, MAXFLOAT);
-        contSize = [string sizeWithFont:font constrainedToSize:textMaxSize lineBreakMode:0];
-    }
-    return contSize;
-}
 
 
-
+#pragma 设置 label
 - (void)addLabelWithString:(NSString *)contentString
 {
     // 先计算size
@@ -121,40 +120,62 @@
                                     GLabelMaxWidth ,
                                     self.contSize.origin.y + contentSize.height + kLabelWithLabelMargin);
         // 最后返回最新的 self.contSize 供其他 subview 使用
-        [self.backView insertSubview:contLabel atIndex:self.subviews.count];
+        [self.backView addSubview:contLabel];
+    
+    contLabel.userInteractionEnabled = YES;
+    
 
     
 }
 
 - (void)addImageViewWithURL:(NSString *)url
 {
-        CGRect imageViewCGRect = CGRectMake( GLabelLeftSection + 6  ,
-                                             self.contSize.origin.y ,
-                                             GImageMaxWidth         ,
-                                             GImageMaxHight );
-
-        UIImageView *imageView  = [[UIImageView alloc]
-                                   initWithFrame:imageViewCGRect];
-        imageView.backgroundColor = GDetailbackGroundColor;
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [imageView setImageWithURL:[NSURL URLWithString:url]
-                  placeholderImage:[UIImage imageWithName:@"4"]
-                         completed:^( UIImage *image, NSError *error, SDImageCacheType cacheType) {
-            
-        }];
-        [self.backView insertSubview:imageView atIndex:self.subviews.count];
+        // 先将这个 imageviewURL 添加到数组
     
-        // 最后返回最新的 self.contSize 供其他 subview 使用
-        self.contSize = CGRectMake( GLabelLeftSection ,
-                                    self.contSize.size.height + GImageMaxHight + kimageWithimageMargin,
-                                    GImageMaxWidth ,
-                                    self.contSize.size.height + GImageMaxHight + kimageWithimageMargin );
+     [self.potosArray addObject:[NSString stringWithFormat:@"%@",url]];
+    
+    CGRect imageViewCGRect = CGRectMake( GLabelLeftSection + 6  ,
+                                         self.contSize.origin.y ,
+                                         GImageMaxWidth         ,
+                                         GImageMaxHight );
+
+    UIImageView *imageView  = [[UIImageView alloc]
+                               initWithFrame:imageViewCGRect];
+    imageView.backgroundColor = GDetailbackGroundColor;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [imageView setImageWithURL:[NSURL URLWithString:url]
+              placeholderImage:[UIImage imageWithName:@"4"]
+                     completed:^( UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        
+    }];
+    [self addSubview:imageView];
+    
+    //设置 image
+    imageView.userInteractionEnabled = YES;
+    
+    // 添加监听点击时间
+    UIGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage:)];
+    [imageView addGestureRecognizer:tap];
+    [self.logoView addSubview:imageView];
+    imageView.tag = self.i++;
+    
+    tap.delegate = self;
+
+    // 最后返回最新的 self.contSize 供其他 subview 使用
+    self.contSize = CGRectMake( GLabelLeftSection ,
+                                self.contSize.size.height + GImageMaxHight + kimageWithimageMargin,
+                                GImageMaxWidth ,
+                                self.contSize.size.height + GImageMaxHight + kimageWithimageMargin );
+    
+    
 
 }
 
 
 
-
+/**
+ *  大标题  &  子标题
+ */
 - (void)setTitleAndSubtitle
 {
     
@@ -182,7 +203,7 @@
     title_showLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.35f];
     title_showLabel.shadowBlur = 3.0f;
     [self.backView addSubview:title_showLabel];
-    
+    title_showLabel.userInteractionEnabled =YES;
     
     // 设置子标题
     // 1)计算 hometext_show_short 的位置
@@ -212,11 +233,13 @@
                                          hometext_show_shortRect.size.height + 5)];
     if (IOS7_OR_LATER) {
         backView.image = [UIImage resizeImageWithImageName:@"3" left:0.5 top:0.5];
+
     }else {
         backView.image = [UIImage resizeImageWithImageName:@"wihte" left:0.5 top:0.5];
+       
     }
+    
     [self.backView addSubview:backView];
-
     [self.backView addSubview:hometext_show_shortLabel];
 
 }
@@ -227,14 +250,60 @@
     
     self.imageView.frame = CGRectMake(0 , 64 , 320, 100);
     
-    self.imageView.backgroundColor = [UIColor colorWithWhite:255.0/255.0 alpha:0];
+//    self.imageView.backgroundColor = [UIColor colorWithWhite:255.0/255.0 alpha:0.5];
     
-    [self.backView insertSubview:self.imageView atIndex:self.subviews.count];
+    [self.backView addSubview:self.imageView];
+    
+    self.backView.userInteractionEnabled = YES;
+    self.imageView.userInteractionEnabled = YES;
+
     
 }
 
 
+#pragma 图片点击之后打开图片浏览器
+- (void)tapImage:(UITapGestureRecognizer *)tap
+{
+    NSArray *arr_url = (NSArray *)self.potosArray;
+    
+    int count = (int)arr_url.count;
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
+    for (int i = 0; i<count; i++) {
+        // 替换为中等尺寸图片
+        NSString *url = arr_url[i];
+        MJPhoto *photo = [[MJPhoto alloc] init];
+        photo.url = [NSURL URLWithString:url]; // 图片路径
+        photo.srcImageView = self.logoView.subviews[i]; // 来源于哪个UIImageView
+        [photos addObject:photo];
+    }
+    
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = tap.view.tag; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
+}
 
+/**
+ *  计算文字的高度
+ *
+ *  @param string 要计算的文字
+ *
+ *  @return 字体的大小
+ */
+- (CGSize)sizeOfString:(NSString *)string withFont:(UIFont *)font
+{
+    CGSize contSize;
+    if (IOS7_OR_LATER) {
+        CGSize textMaxSize = CGSizeMake(GLabelMaxWidth, MAXFLOAT);
+        contSize = [string sizeWithFont:font maxSize:textMaxSize];
+    }else{
+        CGSize textMaxSize = CGSizeMake(GLabelMaxWidth, MAXFLOAT);
+        contSize = [string sizeWithFont:font constrainedToSize:textMaxSize lineBreakMode:0];
+    }
+    return contSize;
+}
 
 
 @end

@@ -64,6 +64,7 @@
     [self addTimer];
     self.scrollView.backgroundColor = [UIColor redColor];
     return self.scrollView;
+    
 }
 
 

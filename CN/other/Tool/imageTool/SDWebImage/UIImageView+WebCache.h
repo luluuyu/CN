@@ -26,7 +26,8 @@
  
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
  
-    if (cell == nil) {
+    if (cell == nil)
+    {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier]
                  autorelease];
     }
@@ -133,12 +134,14 @@
  */
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock;
 
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock dealedBlock:(MJWebImageDealedBlock)dealedBlock;
+
 /**
  * Download an array of images and starts them in an animation loop
  *
  *@param arrayOfURLs An array of NSURL
  */
-- (void)setAnimationImagesWithURLs:(NSArray *)arrayOfURLs;
+-(void)setAnimationImagesWithURLs:(NSArray *)arrayOfURLs;
 
 /**
  * Cancel the current download

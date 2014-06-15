@@ -1,4 +1,4 @@
-/*
+  /*
  * This file is part of the SDWebImage package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
@@ -135,7 +135,7 @@
 - (void)setFinished:(BOOL)finished
 {
     [self willChangeValueForKey:@"isFinished"];
-    _finished = finished;
+     _finished = finished;
     [self didChangeValueForKey:@"isFinished"];
 }
 

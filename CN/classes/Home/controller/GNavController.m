@@ -15,7 +15,9 @@
 
 @implementation GNavController
 
-+ (void)initialize
+
+
+- (void)viewDidLoad
 {
     // 1.设置导航栏主题
     UINavigationBar *navBar = [UINavigationBar appearance];
@@ -43,6 +45,7 @@
     itemAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:14];
     [item setTitleTextAttributes:itemAttrs forState:UIControlStateNormal];
     
+    
     if (!iOS7) {
         // 设置按钮背景
         [item setBackgroundImage:[UIImage imageNamed:@"NavButton"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -52,6 +55,10 @@
         [item setBackButtonBackgroundImage:[UIImage imageNamed:@"NavBackButton"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
         [item setBackButtonBackgroundImage:[UIImage imageNamed:@"NavBackButtonPressed"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     }
+
+
 }
+
+
 
 @end

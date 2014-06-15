@@ -126,14 +126,14 @@ static FMDatabaseQueue *_queue;
         
         FMResultSet *rs = nil;
         
-        rs = [db executeQuery:@"select max(sid) dd from t_status "];
-        
-        while(rs.next)
-        {
-            int data2 = [rs intForColumnIndex:0];
-
-        }
-       
+//        rs = [db executeQuery:@"select max(sid) dd from t_status "];
+//        
+//        while(rs.next)
+//        {
+//            int data2 = [rs intForColumnIndex:0];
+//
+//        }
+//       
         
         rs = [db executeQuery:@"select * from t_status ORDER BY  sid DESC LIMIT ?" , [NSNumber numberWithUnsignedInt:[limit intValue]]];
 //        rs = [db executeQuery:@"select * from t_status ORDER BY sid DESC"];
@@ -185,6 +185,28 @@ static FMDatabaseQueue *_queue;
         return NO;
     }
 }
++ (NSString *)getSidCount
+{
+    
+    // 1.定义数组
 
+    __block NSString *str = [NSString string];
+    // 2.使用数据库
+    [_queue inDatabase:^(FMDatabase *db) {
+        // 创建数组
+
+        
+        FMResultSet *rs = nil;
+        
+        rs = [db executeQuery:@"select id from t_status where id = ( select max(id) from t_status)"];
+        
+        while (rs.next) {
+           int maxID = [rs intForColumnIndex:0];
+            str = [NSString stringWithFormat:@"%d 条",maxID];
+        }
+    }];
+    
+    return str;
+}
 
 @end

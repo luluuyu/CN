@@ -11,7 +11,7 @@
 #import "GNavController.h"
 #import <Crashlytics/Crashlytics.h>
 #import "Flurry.h"
-#import "UMSocial.h"
+
 @implementation GAppDelegate
 
 
@@ -27,7 +27,7 @@
 	[self.window makeKeyAndVisible];
 	[Crashlytics startWithAPIKey:@"5e0b7bb211f1e833fb7f2c20c320cab13d19bab2"];
     [Flurry startSession:@"JZ5GZ3Z32DDCN4CMSRPR"];
-//    [UMSocialData setAppKey:@"539c40b356240ba62f0aca62"];
+
     return YES;
 }
 							

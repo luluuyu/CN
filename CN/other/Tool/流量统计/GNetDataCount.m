@@ -47,7 +47,7 @@
     return iBytes + oBytes;
 }
 
-+ (long long int)getInterfaceBytes
++ (long long int)getInterfaceMBytes
 {
     struct ifaddrs *ifa_list = 0, *ifa;
     if (getifaddrs(&ifa_list) == -1)
@@ -83,7 +83,7 @@
     }
     freeifaddrs(ifa_list);
     
-    return iBytes+oBytes;
+    return iBytes+oBytes/1024;
 }
 
 + (NSString *)bytesToAvaiUnit:(int) bytes

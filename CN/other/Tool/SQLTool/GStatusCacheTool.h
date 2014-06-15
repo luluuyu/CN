@@ -48,5 +48,5 @@
 // sid 是否在数据库中已经存在
 + (BOOL)isSidAlreadyIn:(int)sid;
 
-
++ (NSString *)getSidCount;
 @end

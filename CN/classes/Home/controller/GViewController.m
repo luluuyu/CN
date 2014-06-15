@@ -24,11 +24,12 @@
 #import "GDetailModel.h"
 #import "GDetailViewController.h"
 #import "FXLabel.h"
+#import "GSettingVC.h"
 
 
 
 
-@interface GViewController ()<MJRefreshBaseViewDelegate>
+@interface GViewController ()<MJRefreshBaseViewDelegate,UIGestureRecognizerDelegate>
 
 
 @property (nonatomic, weak  ) UIPageControl         *pageControl;
@@ -39,9 +40,11 @@
 @property (nonatomic, weak  ) MJRefreshHeaderView   *header;
 @property (nonatomic, assign) int                    page;                    //第几页
 @property (nonatomic, weak  ) UIRefreshControl      *refreshControl;
-
+@property (nonatomic, assign) CGFloat nowPoint;
+@property (nonatomic, strong) UIViewController      *settingView;
 @property (nonatomic, readonly, getter=isRefreshing) BOOL refreshing;
-
+@property (nonatomic, strong) UITableView           *tableView;
+@property (nonatomic, getter = isOpened) BOOL        settingViewOpened;
 @end
 
 @implementation GViewController
@@ -50,48 +53,37 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    self.tableView.rowHeight = 240;
     
-	self.tableView.rowHeight = 230;
-
+//    [self setupTableView];
     // 执行刷新操作
     [self setupRefreshView];
     
-}
-
-
-- (BOOL)prefersStatusBarHidden
-{
-    return NO;
-}
-
-- (void)setupRefreshView
-{
-    // 1.下拉刷新
-    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
-    header.scrollView = self.tableView;
-    header.delegate = self;
-    // 自动进入刷新状态
-    [header beginRefreshing];
-    self.header = header;
+    [self setnavBarBarttom];
     
-    // 2.上拉刷新(上拉加载更多数据)
-    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
-    footer.scrollView = self.tableView;
-    footer.delegate = self;
-    self.footer = footer;
- 
-}
-#pragma mark - 刷新控件开始刷新的时候调用这个方法
-- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
-{
-    if ([refreshView isKindOfClass:[MJRefreshFooterView class]]) { // 上拉刷新
-        [self loadOldData];
-    } else { // 下拉刷新
-        [self loadNewData];
-        
-    }
+    
 }
 
+- (void)setnavBarBarttom
+{
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(itemBeClicked)];
+    [self.navigationItem setRightBarButtonItem:leftItem];
+}
+
+- (void)itemBeClicked
+{
+//    CGSize size = [UIScreen mainScreen].bounds.size;
+//    if (self.settingViewOpened == YES) {
+//        self.tableView.frame = CGRectMake(0, 0,size.width, size.height);
+//        self.settingViewOpened = NO;
+//    }else if (self.settingViewOpened == NO){
+//    self.tableView.frame = CGRectMake(200, 0, size.width, size.height);
+//        self.settingViewOpened = YES;
+//    }
+    [self setupLView];
+    
+    [self.navigationController pushViewController:self.settingView animated:YES];
+}
 
 
 #pragma mark - 从数据库加载数据 从param. sid_since 到 sid_end
@@ -111,8 +103,8 @@
 - (void)loadOldData
 {
     //取出数据中最小的 mini_Sid
-    NSUserDefaults *defaults   = [NSUserDefaults standardUserDefaults];
-    NSString *mini_sid         = [defaults objectForKey:@"miniSid"];
+//    NSUserDefaults *defaults   = [NSUserDefaults standardUserDefaults];
+//    NSString *mini_sid         = [defaults objectForKey:@"miniSid"];
     GStatus  *status           = self.array[self.array.count - 1];
     NSString *current_mini_sid = status.sid;
     GStatusesSid *param = [[GStatusesSid alloc]init];
@@ -209,10 +201,6 @@
 }
 
 
-
-
-
-
 #pragma mark - Table View 的行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -289,6 +277,35 @@
     self.array = tempArray;
 }
 
+#pragma mark - 设置刷新控件
+- (void)setupRefreshView
+{
+    // 1.下拉刷新
+    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
+    header.scrollView = self.tableView;
+    header.delegate = self;
+    // 自动进入刷新状态
+    [header beginRefreshing];
+    self.header = header;
+    
+    // 2.上拉刷新(上拉加载更多数据)
+    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
+    footer.scrollView = self.tableView;
+    footer.delegate = self;
+    self.footer = footer;
+}
+
+#pragma mark - 刷新控件开始刷新的时候调用这个方法
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+{
+    if ([refreshView isKindOfClass:[MJRefreshFooterView class]]) { // 上拉刷新
+        [self loadOldData];
+    } else { // 下拉刷新
+        [self loadNewData];
+        
+    }
+}
+
 #pragma mark - 释放刷新控件
 - (void)dealloc
 {
@@ -296,8 +313,109 @@
     [self.header free];
     [self.footer free];
 }
+- (BOOL)prefersStatusBarHidden
+{
+    return NO;
+}
 
 
+
+- (void)setupLView
+{
+    self.settingView = [[GSettingVC alloc] init];
+    self.settingView.view.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)transF:(UIPanGestureRecognizer *)pan
+{
+    
+    CGFloat a = [pan translationInView:self.view].x;
+    
+    if (pan.state == UIGestureRecognizerStateBegan) {
+        if (self.view.frame.origin.x == 200) {
+            self.nowPoint = [pan locationInView:self.view].x;
+        }
+        
+    }
+    
+    if (pan.state == UIGestureRecognizerStateChanged) {
+        
+        if (a < 0 && self.nowPoint == 0.0) {
+            return;
+        }
+        
+        if (a < 130 && a > 0) {
+            [self moving:a];
+        }else if (a >= 130 && a <= 200)
+            self.tableView.frame = CGRectMake(a, 0, 320, 568);
+        
+        if (a < 0 && a > -200) {
+            self.tableView.frame = CGRectMake(200 + a, 0, 320, 568);
+        }
+    }
+    
+    
+    
+    if (pan.state == UIGestureRecognizerStateEnded) {
+        if (a > 130) {
+            [self moveToRight];
+            
+        }else {
+            [self moveToZero];
+            
+        }
+    }
+    
+}
+
+- (void)moving:(CGFloat)a
+{
+    for (int i = 0; i < 10; i++) {
+        self.tableView.frame = CGRectMake(a + 0.10, 0, 320, 568);
+    }
+}
+
+- (void)moveToZero
+{
+//    CATransform3D transform;
+//    transform = CATransform3DMakeScale(self.nowPoint, 1.f, 1.f);
+//    transform = CATransform3DTranslate(transform, 1.f, 0.f, 0.f);
+    self.tableView.frame = CGRectMake(0, 0, 320, 568);
+    // 记录位置
+    self.nowPoint = 0.0;
+}
+
+- (void)moveToRight
+{
+    self.tableView.frame = CGRectMake(200, 0, 320, 568);
+    // 记录位置
+    self.nowPoint = 200.0;
+    
+}
+
+- (void)setupTableView
+{
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)];
+	self.tableView.rowHeight = 230;
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self.view addSubview:self.tableView];
+    
+    // tableView 添加手势识别
+//    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(transF:)];
+//    [self.tableView addGestureRecognizer:pan];
+//    pan.delegate = self;
+    
+
+    //阴影的颜色
+    self.tableView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.tableView.layer.shadowOffset = CGSizeMake(0, 0);
+    //阴影透明度
+    self.tableView.layer.shadowOpacity = 2.0;
+    //阴影圆角度数
+    self.tableView.layer.shadowRadius = 10.0;
+    
+}
 @end
 
 

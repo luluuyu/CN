@@ -32,11 +32,10 @@
 @interface GDetailView () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIImageView      *imageView;
-@property (nonatomic, strong)UIView          *backView;
-@property (nonatomic, strong) NSMutableArray  *potosArray;
+@property (nonatomic, strong)UIView            *backView;
+@property (nonatomic, strong) NSMutableArray   *potosArray;
 @property (nonatomic, strong) UIImageView      *logoView;
 @property (nonatomic, assign) int              i;
-
 
 @end
 
@@ -149,11 +148,12 @@
         
     }];
     [self addSubview:imageView];
+
     
     //设置 image
     imageView.userInteractionEnabled = YES;
     
-    // 添加监听点击时间
+    // 添加监听点击
     UIGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage:)];
     [imageView addGestureRecognizer:tap];
     [self.logoView addSubview:imageView];
@@ -304,6 +304,9 @@
     }
     return contSize;
 }
+
+
+
 
 
 @end

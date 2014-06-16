@@ -13,7 +13,7 @@
 #import "GDetailModel.h"
 #import "GStastusDetailCacheTool.h"
 #import "MBProgressHUD+MJ.h"
-
+#import "UMSocial.h"
 
 @interface GDetailViewController () <UIScrollViewDelegate>
 
@@ -35,9 +35,6 @@
 {
     [super viewDidLoad];
     
-//    // 设置 imageView_top
-//    [self initimageView];
-    
     self.view.backgroundColor = GDetailbackGroundColor;
     self.navigationItem.title = @"cnBetter";
     [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -55,9 +52,25 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     }
     
+    // 设置分享按钮
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(share)];
     
     
+}
+
+#pragma  share
+- (void)share
+{
+    NSString *str = [NSString stringWithFormat:@"%@.   http://www.cnbeta.com%@",self.GDM.title_show,self.GDM.url_show];
+
     
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"539c40b356240ba62f0aca62"
+                                      shareText:str
+                                     shareImage:nil
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToTencent,UMShareToRenren,nil]
+                                       delegate:nil];
 }
 
 - (void)initimageView

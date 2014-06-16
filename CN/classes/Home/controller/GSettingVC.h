@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GSettingVC : UIViewController
+@protocol sugesstionCellDidClickedDelegate <NSObject>
+@optional
+- (void)sugesstionCellDidClickedDelegate;
 
+@end
+
+@interface GSettingVC : UIViewController
+@property (nonatomic, weak) id <sugesstionCellDidClickedDelegate> delegate;
 @end

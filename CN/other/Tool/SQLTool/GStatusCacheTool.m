@@ -198,7 +198,7 @@ static FMDatabaseQueue *_queue;
         
         FMResultSet *rs = nil;
         
-        rs = [db executeQuery:@"select id from t_status where id = ( select max(id) from t_status)"];
+        rs = [db executeQuery:@"select id from t_statusesDetail where id = ( select max(id) from t_statusesDetail)"];
         
         while (rs.next) {
            int maxID = [rs intForColumnIndex:0];

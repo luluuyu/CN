@@ -10,6 +10,7 @@
                 <outlet property="NetDataContLabel" destination="56c-mp-SnQ" id="WW6-rG-fi8"/>
                 <outlet property="RightsReservedCell" destination="ewM-1p-Zk4" id="Zb5-tP-syU"/>
                 <outlet property="StatusCountLabel" destination="UJj-kJ-smy" id="62Y-dq-G3V"/>
+                <outlet property="suggestionCell" destination="Whe-bE-hIc" id="eqR-Kv-dut"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -120,17 +121,6 @@
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="q5h-vk-Cfn"/>
                             </constraints>
                         </tableViewCell>
-                        <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgr-59-kdM">
-                            <rect key="frame" x="0.0" y="370" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <state key="normal">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="rightCellBeCicked" destination="-1" eventType="touchUpInside" id="JkJ-wI-4bY"/>
-                            </connections>
-                        </button>
                         <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" textLabel="cCG-Xb-FxQ" detailTextLabel="jVc-TY-Q2M" style="IBUITableViewCellStyleValue1" translatesAutoresizingMaskIntoConstraints="NO" id="Whe-bE-hIc">
                             <rect key="frame" x="0.0" y="325" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

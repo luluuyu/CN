@@ -25,7 +25,7 @@
 #import "GDetailViewController.h"
 #import "FXLabel.h"
 #import "GSettingVC.h"
-
+#import "UMSocial.h"
 
 
 
@@ -258,6 +258,7 @@
         GDM.sid        = s.sid;
         GDVC.GDM       = GDM;
         [self.navigationController pushViewController:GDVC animated:YES];
+    
     
 }
 

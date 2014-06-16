@@ -158,7 +158,7 @@
     [imageView addGestureRecognizer:tap];
     [self.logoView addSubview:imageView];
     imageView.tag = self.i++;
-    
+
     tap.delegate = self;
 
     // 最后返回最新的 self.contSize 供其他 subview 使用

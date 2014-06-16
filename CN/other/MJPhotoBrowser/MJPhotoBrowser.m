@@ -96,6 +96,7 @@
     _photoScrollView.contentSize = CGSizeMake(frame.size.width * _photos.count, 0);
 	[self.view addSubview:_photoScrollView];
     _photoScrollView.contentOffset = CGPointMake(_currentPhotoIndex * frame.size.width, 0);
+
 }
 
 - (void)setPhotos:(NSArray *)photos

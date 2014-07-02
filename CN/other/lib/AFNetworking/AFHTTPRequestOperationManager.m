@@ -97,10 +97,10 @@
                                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//    operation.responseSerializer = self.responseSerializer;
+    operation.responseSerializer = self.responseSerializer;
     operation.shouldUseCredentialStorage = self.shouldUseCredentialStorage;
     operation.credential = self.credential;
-//    operation.securityPolicy = self.securityPolicy;
+    operation.securityPolicy = self.securityPolicy;
 
     [operation setCompletionBlockWithSuccess:success failure:failure];
 

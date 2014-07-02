@@ -81,7 +81,6 @@
     for (int i=0; i<self.length; i++)
     {
         NSString *str = [self substringWithRange:NSMakeRange(i,1)];
-        NSLog(@"%@", str);
         [array addObject:str];
     }
     NSArray *words = [NSArray arrayWithArray:array];

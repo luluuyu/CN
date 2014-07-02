@@ -96,7 +96,7 @@
         NSCachedURLResponse *response = [urlCache cachedResponseForRequest:request];
         if(response != nil)
         {
-            //            NSLog(@"如果又缓存输出，从缓存中获取数据");
+
             [request setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
         }
         

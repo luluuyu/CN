@@ -72,14 +72,6 @@
 
 - (void)itemBeClicked
 {
-//    CGSize size = [UIScreen mainScreen].bounds.size;
-//    if (self.settingViewOpened == YES) {
-//        self.tableView.frame = CGRectMake(0, 0,size.width, size.height);
-//        self.settingViewOpened = NO;
-//    }else if (self.settingViewOpened == NO){
-//    self.tableView.frame = CGRectMake(200, 0, size.width, size.height);
-//        self.settingViewOpened = YES;
-//    }
     [self setupLView];
     
     [self.navigationController pushViewController:self.settingView animated:YES];
@@ -173,6 +165,7 @@
         NSBlockOperation *opFailure = [NSBlockOperation blockOperationWithBlock:^{
             // 请求成功回调回来 返回最新的数据
              self.array = newData;
+
              [self.tableView reloadData];
              [self.header endRefreshing];
             //设置网络指示器
@@ -215,14 +208,15 @@
 {
    
     GTableViewCell *cell = [GTableViewCell cellWithTableView:tableView];
+    GStatus *s = self.array[indexPath.row];
+    if (s.hometext_show_short == NULL) {
+        s = self.array[59];
+    }
     
-    if (self.array.count > 0 || self.array[indexPath.row] != nil) {
+    if (self.array.count > 0 && s.hometext_show_short != NULL) {
         
-        GStatus *s = self.array[indexPath.row];
         cell.contLable.text  = s.hometext_show_short;
         cell.titleLable.text = s.title_show;
-       
-
 
         NSURL *url = [NSURL URLWithString:s.logo];
         //判断如果 URL 中含有空格的时候, 处理返回的 nsurl 为空的BUG
@@ -251,6 +245,9 @@
     
         GDetailViewController *GDVC = [[GDetailViewController alloc] init];
         GStatus *s = self.array[indexPath.row];
+    if (s.hometext_show_short == NULL) {
+        s = self.array[59];
+    }
         GDetailModel *GDM = [[GDetailModel alloc]init];
         GDM.title_show = s.title_show;
         GDM.hometext_show_short = s.hometext_show_short;
@@ -323,8 +320,11 @@
 
 - (void)setupLView
 {
-    self.settingView = [[GSettingVC alloc] init];
-    self.settingView.view.backgroundColor = [UIColor whiteColor];
+    if (self.settingView == nil) {
+        self.settingView = [[GSettingVC alloc] init];
+        self.settingView.view.backgroundColor = [UIColor whiteColor];
+    }
+    
 }
 
 - (void)transF:(UIPanGestureRecognizer *)pan

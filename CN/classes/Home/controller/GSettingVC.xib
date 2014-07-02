@@ -38,8 +38,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="离线总条数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gvN-NF-rwb">
-                                        <rect key="frame" x="15" y="11" width="85" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="离线条数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gvN-NF-rwb">
+                                        <rect key="frame" x="15" y="11" width="68" height="21"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
@@ -157,8 +157,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="3G/2G 是否载图片" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fS5-CN-glV">
-                                        <rect key="frame" x="15" y="11" width="141" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="分享好友" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fS5-CN-glV">
+                                        <rect key="frame" x="15" y="11" width="68" height="21"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -190,19 +190,10 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GBw-4N-bXe">
-                            <rect key="frame" x="251" y="287" width="51" height="31"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="49" id="B6y-fI-hsn"/>
-                                <constraint firstAttribute="height" constant="31" id="ziW-6g-2fP"/>
-                            </constraints>
-                        </switch>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="ojB-kc-TBk" secondAttribute="bottom" constant="32" id="1DX-rr-eUC"/>
-                        <constraint firstItem="GBw-4N-bXe" firstAttribute="top" secondItem="UJj-kJ-smy" secondAttribute="bottom" constant="8" id="2On-TD-sdR"/>
                         <constraint firstAttribute="trailing" secondItem="UJj-kJ-smy" secondAttribute="trailing" id="5Eo-Uh-5SC"/>
                         <constraint firstItem="Rgi-pc-7Mv" firstAttribute="leading" secondItem="umr-It-qUV" secondAttribute="leading" constant="90" id="9vd-IK-1wh"/>
                         <constraint firstItem="ewM-1p-Zk4" firstAttribute="leading" secondItem="umr-It-qUV" secondAttribute="leading" id="DMq-FI-hwB"/>
@@ -220,10 +211,8 @@
                         <constraint firstItem="gg1-yh-FKn" firstAttribute="top" secondItem="UJj-kJ-smy" secondAttribute="bottom" constant="1" id="bCM-7C-MHj"/>
                         <constraint firstAttribute="trailing" secondItem="ojB-kc-TBk" secondAttribute="trailing" constant="60" id="hMu-Bd-Bc5"/>
                         <constraint firstItem="Whe-bE-hIc" firstAttribute="leading" secondItem="umr-It-qUV" secondAttribute="leading" id="mWD-6m-gwc"/>
-                        <constraint firstItem="GBw-4N-bXe" firstAttribute="leading" secondItem="umr-It-qUV" secondAttribute="leading" constant="251" id="maq-lX-v6v"/>
                         <constraint firstAttribute="trailing" secondItem="56c-mp-SnQ" secondAttribute="trailing" id="ph4-LM-HyS"/>
                         <constraint firstItem="UJj-kJ-smy" firstAttribute="top" secondItem="56c-mp-SnQ" secondAttribute="bottom" constant="1" id="skn-Eo-GjB"/>
-                        <constraint firstAttribute="trailing" secondItem="GBw-4N-bXe" secondAttribute="trailing" constant="20" id="ucT-1b-nHc"/>
                         <constraint firstItem="gg1-yh-FKn" firstAttribute="leading" secondItem="umr-It-qUV" secondAttribute="leading" id="ukj-7N-QmU"/>
                         <constraint firstItem="ewM-1p-Zk4" firstAttribute="top" secondItem="Whe-bE-hIc" secondAttribute="bottom" constant="1" id="wiS-W0-zCH"/>
                         <constraint firstItem="56c-mp-SnQ" firstAttribute="top" secondItem="Rgi-pc-7Mv" secondAttribute="bottom" constant="20" id="zMd-1v-ick"/>

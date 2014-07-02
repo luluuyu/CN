@@ -39,7 +39,7 @@
             
             iBytes += if_data->ifi_ibytes;
             oBytes += if_data->ifi_obytes;
-            NSLog(@"%s :iBytes is %d, oBytes is %d",ifa->ifa_name, iBytes, oBytes);
+//            NSLog(@"%s :iBytes is %d, oBytes is %d",ifa->ifa_name, iBytes, oBytes);
         }
     }
     freeifaddrs(ifa_list);

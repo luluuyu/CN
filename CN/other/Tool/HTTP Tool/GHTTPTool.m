@@ -74,7 +74,7 @@
     
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
     
-    [request setTimeoutInterval: 60];
+    [request setTimeoutInterval: 10];
     
     [request setHTTPShouldHandleCookies:FALSE];
     
@@ -188,9 +188,9 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc]init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
-
         
-        if (response) {
+        if (data) {
+            
             
             NSString *strReturn = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             
@@ -201,16 +201,16 @@
             strReturn = [strReturn substringFromIndex:range1.location ];
             strReturn = [strReturn substringToIndex:range2.location - range1.location];
             
-            
-            
             NSArray *arr = [strReturn componentsSeparatedByString:NSLocalizedString(@"},", nil)];
+            
             NSMutableArray *ma = [NSMutableArray array];
+            NSString *status =nil;
             for (int i = 0; i < arr.count; i++) {
-                
-                
-                NSString *status = [self replaceUnicode:arr[i]];
-                
+
+                 status = [self replaceUnicode:arr[i]];
+
                 NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+                
                 
                 
                 [dict setValue:[self parse:@"sid" arr:status]        forKey:@"sid"];
@@ -228,11 +228,12 @@
                 
                 [ma addObject:dict];
                 
+
                 //当前数据的sid
                 int currentSid = [dict[@"sid"] intValue];
-                
+
                 //
-                if (![GStatusCacheTool isSidAlreadyIn:currentSid]) {
+                if (![GStatusCacheTool isSidAlreadyIn:currentSid] && currentSid > 0) {
                     [GStatusCacheTool addStatus:dict];
                 }
                 
@@ -325,8 +326,6 @@
 
 - (NSString *)replaceUnicode:(NSString *)unicodeStr {
     
-    
-    
     NSString *tempStr1  = [unicodeStr stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
     NSString *tempStr2  = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
     NSString *tempStr3  = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
@@ -335,7 +334,7 @@
                                                            mutabilityOption:NSPropertyListImmutable
                                                                      format:NULL
                                                            errorDescription:NULL];
-
+    
 
     return [returnStr stringByReplacingOccurrencesOfString:@"\\r\\n" withString:@"\n"];
 }
